@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.ant-table-thead > tr > th{
+    background-color: #3BA6F6 !important;
+    color: white !important;
+}
+.ant-table-thead > tr > th::before{
+    display: none;
+}
+.ant-table-tbody{
+    border-end-end-radius: 16px !important;
+}
+
+.ant-badge-count{
+    position: absolute !important;
+    top: 10px !important;
+    right: 9px !important;
+    inset-inline-end: 0;
+    transform: translate(50%, -50%);
+    transform-origin: 100% 0%;
+}
+
+.PhoneInputInput{
+    outline: none;
+    /* background-color: #EBF6FE; */
+    background-color:  #EBF6FE;
+    padding: 1rem;
+    border-radius:5px ;
+}
+.PhoneInputCountry{
+    margin-right: 15px !important;
+    display: flex !important;
+    gap:10px;
+    background-color:  #EBF6FE;
+    padding: 1rem;
+    border-radius:5px ;
+}
+
+.ant-upload{
+    background-color: white !important;
+    width: 242px;
+    height: 242px;
+}

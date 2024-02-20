@@ -11,6 +11,15 @@ import ProfileInformation from "../pages/dashboard/ProfileInformation/ProfileInf
 import EditProfile from "../pages/dashboard/EditProfile/EditProfile";
 import UserList from "../pages/users/UserList/UserList";
 import UserDetails from "../pages/users/UserDetails/UserDetails";
+import Appointments from "../pages/dashboard/Appointments/Appointments";
+import AppointmentDetails from "../pages/dashboard/Appointments/AppointmentDetails";
+import Earnings from "../pages/dashboard/Earnings/Earnings";
+import TransactionDetails from "../pages/dashboard/Earnings/TransactionDetails";
+import Membership from "../pages/dashboard/Membership/Membership";
+import AddMemberShip from "../pages/dashboard/Membership/AddMemberShip";
+import EditMemberShip from "../pages/dashboard/Membership/EditMemberShip";
+import Blog from "../pages/dashboard/Blog/Blog";
+import AddBlog from "../pages/dashboard/AddBlog/AddBlog";
 
 export const router = createBrowserRouter([
     {
@@ -65,11 +74,19 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'appointments', 
-                element: <></>
+                element: <Appointments/>
+              },
+              {
+                path: 'appointments/appointmentdetails', 
+                element: <AppointmentDetails/>
               },
               {
                 path:'earnings',
-                element: <></>
+                element: <Earnings/>
+              },
+              {
+                path:'earnings/transactiondetails',
+                element: <TransactionDetails/>
               },
             
               {
@@ -77,8 +94,24 @@ export const router = createBrowserRouter([
                 element:  <></>
               },
               {
+                path: 'membership',
+                element:  <Membership/>
+              },
+              {
+                path: 'membership/addmembership',
+                element:  <AddMemberShip/>
+              },
+              {
+                path: 'membership/editmembership',
+                element:  <EditMemberShip/>
+              },
+              {
                 path: 'blog', 
-                element:  <></>
+                element:  <Blog/>
+              },
+              {
+                path: 'blog/add-blog', 
+                element:  <AddBlog/>
               },
               {
                 path: 'settings',

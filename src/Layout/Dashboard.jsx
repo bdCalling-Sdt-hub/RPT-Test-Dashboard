@@ -14,6 +14,8 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { BsDot } from "react-icons/bs";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { MdMenu } from "react-icons/md";
+import { HiMiniCurrencyDollar } from "react-icons/hi2";
+import { PiCrownSimpleLight } from "react-icons/pi";
 import Header from "../components/Header/Header";
 const Dashboard = () => {
   return (
@@ -47,14 +49,29 @@ const Dashboard = () => {
               
               </NavLink>
 
-              <li className="flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6] m-[16px] rounded-lg">
-                <BsCalendar2 /> Appointments
-              </li>
+              <NavLink
+                  to="/dashboard/appointments"
+                  className={({ isActive, isPending }) =>
+                  isPending ? "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg" : isActive ? "flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6]  m-[16px] rounded-lg" : "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px]  m-[16px] rounded-lg"
+                }
+                >
+              
+              <BsCalendar2 /> 
+                Appointments
+              
+              </NavLink>
 
-              <li className="flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6] m-[16px] rounded-lg">
-                <FaHandHoldingUsd />
+              <NavLink
+                  to="/dashboard/earnings"
+                  className={({ isActive, isPending }) =>
+                  isPending ? "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg" : isActive ? "flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6]  m-[16px] rounded-lg" : "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px]  m-[16px] rounded-lg"
+                }
+                >
+              
+              <BiDollarCircle/>
                 Earnings
-              </li>
+              
+              </NavLink>
 
               <li className="cursor-pointer">
                 <details className="group">
@@ -114,11 +131,27 @@ const Dashboard = () => {
                   </article>
                 </details>
               </li>
-              <li className="flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6] m-[16px] rounded-lg">
-                <IoBookOutline />
+              <NavLink
+                  to="/dashboard/membership"
+                  className={({ isActive, isPending }) =>
+                  isPending ? "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg" : isActive ? "flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6]  m-[16px] rounded-lg" : "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px]  m-[16px] rounded-lg"
+                }
+                >
+              
+              <PiCrownSimpleLight />
+                Membership
+              
+              </NavLink>
+              <NavLink
+                  to="/dashboard/blog"
+                  className={({ isActive, isPending }) =>
+                  isPending ? "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg" : isActive ? "flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6]  m-[16px] rounded-lg" : "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px]  m-[16px] rounded-lg"
+                }
+                >
+              
+              <IoBookOutline />
                 Blog
-              </li>
-
+              </NavLink>
               <li className="flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6] m-[16px] rounded-lg">
                 <CiSettings /> Settings
               </li>

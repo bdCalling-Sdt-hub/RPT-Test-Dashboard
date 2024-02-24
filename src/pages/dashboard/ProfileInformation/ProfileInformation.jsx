@@ -33,7 +33,7 @@ const ProfileInformation = () => {
           <p>Edit Profile</p>
         </div>
       </div>
-      <div className="flex ml-[24px] bg-white p-[36px] rounded-xl">
+      <div className="lg:flex  ml-[24px] bg-white p-[36px] rounded-xl">
         <div className="w-[33%] ml-[24px] flex flex-col justify-center items-center gap-[30px]">
           <img
             className="w-[242px] h-[242px] rounded-full"
@@ -147,13 +147,12 @@ const ProfileInformation = () => {
                 onChange={(e) => setDateOfBirth(e.target.value)}
                 placeholder="Email"
                 className="p-4 bg-[#EBF6FE]
+                rounded w-full 
+                justify-start 
+                border-none
                 mt-[12px]
-                 rounded w-full 
-                 justify-start 
-                 border-none
-                 items-center 
-                 gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
-                type="text"
+                items-center 
+                gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
                 prefix={<CiCalendarDate size={20} />}
                 readOnly
               />

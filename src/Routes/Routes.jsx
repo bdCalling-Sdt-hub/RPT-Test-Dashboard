@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../Layout/Dashboard";
-import SignUp from "../pages/auth/SignIn/SignUp";
 import Main from "../Layout/Main";
 import ForgotPassword from "../pages/auth/SignIn/ForgotPassword";
 import VerifyEmail from "../pages/auth/SignIn/Verifyemail";
@@ -19,7 +18,14 @@ import Membership from "../pages/dashboard/Membership/Membership";
 import AddMemberShip from "../pages/dashboard/Membership/AddMemberShip";
 import EditMemberShip from "../pages/dashboard/Membership/EditMemberShip";
 import Blog from "../pages/dashboard/Blog/Blog";
-import AddBlog from "../pages/dashboard/AddBlog/AddBlog";
+import AddBlog from "../pages/dashboard/Blog/AddBlog/AddBlog";
+import EditBlog from "../pages/dashboard/Blog/EditBlog";
+import Setting from "../pages/dashboard/Setting/Setting";
+import AboutUs from "../pages/dashboard/Setting/AboutUs";
+import EditAboutUs from "../pages/dashboard/Setting/EditAboutUs";
+import PrivateRoute from "./PrivateRoute";
+import SignIn from "../pages/auth/SignIn/SignIn";
+
 
 export const router = createBrowserRouter([
     {
@@ -28,7 +34,7 @@ export const router = createBrowserRouter([
         children:[
             {
                 path:'/',
-                element:<SignUp/>
+                element:<SignIn/>
             },{
               path:'/forgot_password',
               element:<ForgotPassword/>
@@ -45,7 +51,7 @@ export const router = createBrowserRouter([
     },
     {
         path:'/dashboard',
-        element:<Dashboard/>,
+        element:<PrivateRoute><Dashboard/></PrivateRoute>,
         children:[
               // admin routes
             {
@@ -114,8 +120,20 @@ export const router = createBrowserRouter([
                 element:  <AddBlog/>
               },
               {
+                path: 'blog/edit-blog', 
+                element:  <EditBlog />
+              },
+              {
                 path: 'settings',
-                element:  <></>
+                element:  <Setting/>
+              },
+              {
+                path: 'settings/about-us',
+                element:  <AboutUs/>
+              },
+              {
+                path: 'settings/edit-about-us',
+                element: <EditAboutUs/>
               }
               
         ]

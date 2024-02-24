@@ -1,5 +1,6 @@
-import { Button, Input, Upload, message } from "antd";
+import { Button, DatePicker, Form, Input, Upload, message } from "antd";
 import { useState } from "react";
+
 import { CiCalendarDate } from "react-icons/ci";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -32,7 +33,7 @@ const EditProfile = () => {
   const [imageUrl, setImageUrl] = useState(
     "https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg"
   );
-
+console.log(imageUrl);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -41,74 +42,75 @@ const EditProfile = () => {
   const [updatedValue,setUpdatedValue] = useState({})
   const navigate = useNavigate();
 
-  // const props = {
-  //     action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
-  //     listType: "picture",
-  //     showUploadList: false, // Disable the default upload list
-  //     beforeUpload(file) {
-  //       return new Promise((resolve) => {
-  //         const reader = new FileReader();
-  //         reader.readAsDataURL(file);
-  //         reader.onload = () => {
-  //           const img = document.createElement("img");
-  //           img.src = reader.result;
-  //           img.onload = () => {
-  //             const canvas = document.createElement("canvas");
-  //             canvas.width = img.naturalWidth;
-  //             canvas.height = img.naturalHeight;
-  //             const ctx = canvas.getContext("2d");
-  //             ctx.drawImage(img, 0, 0);
-  //             ctx.fillStyle = "red";
-  //             ctx.textBaseline = "middle";
-  //             ctx.font = "33px Arial";
-  //             ctx.fillText("", 20, 20);
-  //             canvas.toBlob((result) => {
-  //               resolve(result);
-  //               setImageUrl(URL.createObjectURL(result)); // Update the image URL
-  //             });
-  //           };
-  //         };
-  //       });
-  //     },
-  //   };
+  const props = {
+      action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+      listType: "picture",
+      showUploadList: false, // Disable the default upload list
+      beforeUpload(file) {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            const img = document.createElement("img");
+            img.src = reader.result;
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              canvas.width = img.naturalWidth;
+              canvas.height = img.naturalHeight;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0);
+              ctx.fillStyle = "red";
+              ctx.textBaseline = "middle";
+              ctx.font = "33px Arial";
+              ctx.fillText("", 20, 20);
+              canvas.toBlob((result) => {
+                resolve(result);
+                setImageUrl(URL.createObjectURL(result)); 
+                // console.log(result);// Update the image URL
+              });
+            };
+          };
+        });
+      },
+    };
 
-  const handleChange = (info) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
-    }
-  };
-  const uploadButton = (
-    <button
-      style={{
-        border: 0,
-        background: "none",
-      }}
-      type="button"
-    >
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </button>
-  );
+  // const handleChange = (info) => {
+  //   if (info.file.status === "uploading") {
+  //     setLoading(true);
+  //     return;
+  //   }
+  //   if (info.file.status === "done") {
+  //     // Get this url from response in real world.
+  //     getBase64(info.file.originFileObj, (url) => {
+  //       setLoading(false);
+  //       setImageUrl(url);
+  //     });
+  //   }
+  // };
+  // const uploadButton = (
+  //   <button
+  //     style={{
+  //       border: 0,
+  //       background: "none",
+  //     }}
+  //     type="button"
+  //   >
+  //     {loading ? <LoadingOutlined /> : <PlusOutlined />}
+  //     <div
+  //       style={{
+  //         marginTop: 8,
+  //       }}
+  //     >
+  //       Upload
+  //     </div>
+  //   </button>
+  // );
     const handleUpdateProfile = (e)=>{
         e.preventDefault();
         setUpdatedValue({firstName,lastName,email,phoneNumber,dateOfBirth,imageUrl})
 
-    }
-    console.log(updatedValue);
+      }
+      console.log(updatedValue);
   return (
     <div>
       <div className="flex  items-center ml-[24px] mt-[40px] mb-[63px]">
@@ -128,23 +130,35 @@ const EditProfile = () => {
             alt=""
           /> */}
             <Upload
+             {...props}
               name="avatar"
               listType="picture-circle"
-              className="avatar-uploader"
+              className="avatar-uploader-aiman"
               showUploadList={false}
               action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-              beforeUpload={beforeUpload}
-              onChange={handleChange}
+              // beforeUpload={beforeUpload}
+              onChange={(info) => {
+                if (info.file.status !== "uploading") {
+                  console.log(info?.file, info.fileList);
+                  // setImageUrl(info?.file?.name)
+                }
+                if (info.file.status === "done") {
+                  message.success(
+                    `${info.file.name} file uploaded successfully`
+                  );
+                } else if (info.file.status === "error") {
+                  message.error(`${info.file.name} file upload failed.`);
+                }
+              }}
             >
-              {imageUrl ? (
+          
                 <img
                   className="w-[242px] h-[242px] rounded-full flex justify-center items-center opacity-50"
                   src={imageUrl}
                   alt=""
                 />
-              ) : (
-                uploadButton
-              )}
+                 
+            
               <Button
                 className="border-none text-[16px] text-[#3BA6F6] bg-[white] absolute text-primary hover:text-primary"
                 icon={<LuImagePlus size={17} className="text-[#3BA6F6]"/>}
@@ -278,7 +292,6 @@ const EditProfile = () => {
               </label>
               <Input
                 onChange={(e) => setDateOfBirth(e.target.value)}
-                placeholder="Email"
                 className="p-4 bg-[#EBF6FE]
                 mt-[12px]
                  rounded w-full 
@@ -287,8 +300,12 @@ const EditProfile = () => {
                  items-center 
                  gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
                 type="date"
-                postfix={<CiCalendarDate size={20} />}
+                prefix={" "}
               />
+              
+    
+ 
+
             </div>
           </div>
         

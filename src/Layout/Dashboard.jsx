@@ -152,9 +152,16 @@ const Dashboard = () => {
               <IoBookOutline />
                 Blog
               </NavLink>
-              <li className="flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6] m-[16px] rounded-lg">
-                <CiSettings /> Settings
-              </li>
+              <NavLink
+                  to="/dashboard/settings"
+                  className={({ isActive, isPending }) =>
+                  isPending ? "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg" : isActive ? "flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6]  m-[16px] rounded-lg" : "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px]  m-[16px] rounded-lg"
+                }
+                >
+              
+              <CiSettings /> Setting
+              </NavLink>
+              
             </ul>
           </div>
         </div>
@@ -167,7 +174,7 @@ const Dashboard = () => {
       </div>
       <div className="flex-1">
         <div className="ml-[24px]">
-             <Header/>   
+             <Header />   
         </div>
         <Outlet/>
       </div>

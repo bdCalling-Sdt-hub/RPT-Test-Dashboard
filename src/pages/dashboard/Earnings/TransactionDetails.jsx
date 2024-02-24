@@ -1,9 +1,30 @@
+import html2canvas from "html2canvas";
+import { useRef } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
 
 
 const TransactionDetails = () => {
+    const componentRef = useRef();
     const navigate = useNavigate();
+
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        pageStyle: "",
+      });
+
+      const handleDownload = () => {
+        const element = document.getElementById('content-to-download');
+    
+        html2canvas(element).then((canvas) => {
+          const link = document.createElement('a');
+          link.href = canvas.toDataURL();
+          link.download = 'downloaded-content.png';
+          link.click();
+        });
+      };
+
     return (
         <div>
            <div className="ml-[24px] mt-[44px] flex items-center pb-3 gap-2">
@@ -17,7 +38,7 @@ const TransactionDetails = () => {
             </h1>
           </div>
           <div  className="ml-[24px] flex flex-col justify-between bg-white h-screen p-[24px] rounded-xl">
-            <div className="">
+            <div ref={componentRef} id="content-to-download" className="p-[10px]">
             <h1 className="text-[18px] font-medium mb-[20px]">User Details:</h1>
             <div className="flex justify-between mb-[16px]">
                 <p>Transaction ID:</p>
@@ -59,8 +80,8 @@ const TransactionDetails = () => {
             
             <div className="">
                 <div className="flex gap-5 justify-center">
-                    <p className="px-[135px] py-[16px] text-[16px] cursor-pointer  bg-[#3BA6F6] rounded-lg text-white">Download</p>
-                    <p className="px-[135px] cursor-pointer py-[16px] text-[16px]  border-2 border-[#3BA6F6] rounded-lg text-[#3BA6F6]">Print</p>
+                    <p onClick={handleDownload} className="px-[135px] py-[16px] text-[16px] cursor-pointer  bg-[#3BA6F6] rounded-lg text-white">Download</p>
+                    <p onClick={handlePrint} className="px-[135px] cursor-pointer py-[16px] text-[16px]  border-2 border-[#3BA6F6] rounded-lg text-[#3BA6F6]">Print</p>
                 </div>
             </div>
            

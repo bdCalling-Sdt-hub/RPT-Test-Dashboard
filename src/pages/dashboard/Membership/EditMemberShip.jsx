@@ -4,18 +4,37 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const EditMemberShip = () => {
-    const [firstName, setMemberShiptName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [features,setFeatures] = useState({features:[]})
+    const [memberShipName, setMemberShiptName] = useState("");
+  const [price, setPrice] = useState("");
+  const [priceAlcoholTest, setPriceAlcoholTest] = useState("");
+  const [priceDrugTest, setPriceDrugTest] = useState("");
+  const [features,setFeatures] = useState(Array(6).fill(''))
   const navigate = useNavigate();
-  console.log(features);
-  const handleAddMembership = ()=>{
+
+
+  const handleEditMembership = (e)=>{
+    e.preventDefault()
+    const data = {
+      memberShipName,
+      price,
+      priceDrugTest,
+      priceAlcoholTest,
+      features
+
+    }
+    console.log(data);
 
   }
+
+  const handleInputChange = (index, value) => {
+    setFeatures((prevValues) => {
+      const newValues = [...prevValues];
+      newValues[index] = value;
+      return newValues;
+    });
+  };
     return (
-        <div className="ml-[24px]">
+        <div className="ml-[24px] overflow-auto">
       <div className="mt-[32px] flex items-center pb-3 gap-2">
         <MdOutlineKeyboardArrowLeft
           onClick={() => navigate("/dashboard/membership")}
@@ -46,7 +65,7 @@ const EditMemberShip = () => {
               items-center 
               gap-4 inline-flex outline-none focus:border-none"
               type="text"
-            readOnly
+       
             />
           </div>
 
@@ -58,7 +77,7 @@ const EditMemberShip = () => {
               Price
             </label>
             <Input
-              onChange={(e) => setDateOfBirth(e.target.value)}
+              onChange={(e) => setPrice(e.target.value)}
               placeholder="Price"
               className="p-4 bg-[white]
               rounded w-full 
@@ -68,7 +87,7 @@ const EditMemberShip = () => {
               items-center 
               gap-4 inline-flex outline-none focus:border-none"
               type="text"
-            readOnly
+     
             />
           </div>
           <div className="flex gap-[25px]">
@@ -80,7 +99,7 @@ const EditMemberShip = () => {
                 Price per Drug Test
               </label>
               <Input
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e) => setPriceDrugTest(e.target.value)}
                 placeholder="Price"
                 className="p-4 bg-[white]
                rounded w-full 
@@ -90,7 +109,7 @@ const EditMemberShip = () => {
                items-center 
                gap-4 inline-flex outline-none focus:border-none"
                 type="text"
-                readOnly
+            
               />
             </div>
             <div className="flex-1">
@@ -101,7 +120,7 @@ const EditMemberShip = () => {
                Price Per Breath Alcohol Test
               </label>
               <Input
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => setPriceAlcoholTest(e.target.value)}
                 placeholder="Price"
                 className="p-4 bg-[white]
                   rounded w-full 
@@ -111,7 +130,7 @@ const EditMemberShip = () => {
                   items-center 
                   gap-4 inline-flex outline-none focus:border-none"
                 type="text"
-                readOnly
+          
               />
             </div>
           </div>
@@ -122,101 +141,29 @@ const EditMemberShip = () => {
             >
               Features
             </label>
-            <Input
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Features"
-              className="p-4 bg-[white]
-              rounded w-full 
-              justify-start 
-              border-none
-              mt-[12px]
-              items-center 
-              gap-4 inline-flex outline-none focus:border-none"
-              type="text"
-              readOnly
-            />
-            <Input
-              onChange={(e) => setFeatures((pre)=>({features:[...pre.features,e.target.value]}))}
-              placeholder="Features"
-              className="p-4 bg-[white]
-              rounded w-full 
-              justify-start 
-              border-none
-              mt-[12px]
-              items-center 
-              gap-4 inline-flex outline-none focus:border-none"
-              type="text"
-              readOnly
-            />
-            <Input
-              onChange={(e) => setFeatures((pre)=>({features:[...pre.features,e.target.value]}))}
-              placeholder="Features"
-              className="p-4 bg-[white]
-              rounded w-full 
-              justify-start 
-              border-none
-              mt-[12px]
-              items-center 
-              gap-4 inline-flex outline-none focus:border-none"
-              type="text"
-              readOnly
-            />
-            <Input
-              onChange={(e) => setFeatures((pre)=>({features:[...pre.features,e.target.value]}))}
-              placeholder="Features"
-              className="p-4 bg-[white]
-              rounded w-full 
-              justify-start 
-              border-none
-              mt-[12px]
-              items-center 
-              gap-4 inline-flex outline-none focus:border-none"
-              type="text"
-              readOnly
-            />
-            <Input
-              onChange={(e) =>setFeatures((pre)=>({features:[...pre.features,e.target.value]}))}
-              placeholder=" Features"
-              className="p-4 bg-[white]
-              rounded w-full 
-              justify-start 
-              border-none
-              mt-[12px]
-              items-center 
-              gap-4 inline-flex outline-none focus:border-none"
-              type="text"
-              readOnly
-            />
-            <Input
-              onChange={(e) => setFeatures((pre)=>({features:[...pre.features,e.target.value]}))}
-              placeholder="Features"
-              className="p-4 bg-[white]
-              rounded w-full 
-              justify-start 
-              border-none
-              mt-[12px]
-              items-center 
-              gap-4 inline-flex outline-none focus:border-none"
-              type="text"
-              readOnly
-            />
-            <Input
-              onChange={(e) => setFeatures((pre)=>({features:[...pre.features,e.target.value]}))}
-              placeholder="Membership Name"
-              className="p-4 bg-[white]
-              rounded w-full 
-              justify-start 
-              border-none
-              mt-[12px]
-              items-center 
-              gap-4 inline-flex outline-none focus:border-none"
-              type="text"
-              readOnly
-            />
 
+            {
+              features.map((value,index)=>{
+                return <Input key={index}
+                onChange={(e) => handleInputChange(index, e.target.value)}
+                placeholder="Features"
+                className="p-4 bg-[white]
+                rounded w-full 
+                justify-start 
+                border-none
+                mt-[12px]
+                items-center 
+                gap-4 inline-flex outline-none focus:border-none"
+                type="text"
+              
+              />
+              })
+            }
+            
+            
           </div>
         </div>
-        <button onClick={handleAddMembership} className="text-[18px] w-full mt-[50px] mb-[20px] cursor-pointer py-[15px] bg-[#3BA6F6] text-white rounded-lg">
+        <button onClick={handleEditMembership} className="text-[18px] w-full mt-[50px] mb-[20px] cursor-pointer py-[15px] bg-[#3BA6F6] text-white rounded-lg">
       Update
       </button>
       </div>

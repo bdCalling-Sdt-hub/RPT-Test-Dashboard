@@ -1,58 +1,220 @@
 import logo from "../../../assets/signup/rtp_labs_logo.png";
-import lockIcon from "../../../assets/signup/lockIcon.png";
 import { GoArrowLeft } from "react-icons/go";
 import { Link } from "react-router-dom";
+import { Button, Form, Input } from "antd";
+import { IconLock } from "@tabler/icons-react";
+
 const SetNewPassword = () => {
-    return (
-        <div className="min-h-[100vh] bg-[#EBF6FE] flex justify-center items-center">
-        <div className="bg-[#C2E3FC] px-[144px] py-[124px] rounded-lg w-[638px]">
-          <div className="object-contain">
-            <img src={logo} alt="" />
-            <div className="flex items-center gap-2">
-              <Link to="/verify_email">
-                {" "}
-                <GoArrowLeft className="text-[24px]" />
-              </Link>
-  
-              <h1 className="text-[24px] font-medium my-[24px]">
+  const [form] = Form.useForm();
+  console.log(form);
+
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+  };
+
+  return (
+    <div className="min-h-[100vh] bg-[#EBF6FE] flex justify-center items-center">
+      <div className="bg-[#C2E3FC] px-[144px] py-[124px] rounded-lg w-[638px]">
+        <div className="object-contain">
+          <img src={logo} alt="" />
+          <div className="flex items-center gap-2">
+            <Link to="/verify_email">
+              {" "}
+              <GoArrowLeft className="text-[24px]" />
+            </Link>
+
+            <h1 className="text-[24px] font-medium my-[24px]">
               Set a new password
-              </h1>
-            </div>
-            <p className="text-[16px] mb-[24px] text-[#4E4E4E] ">
-            Your password must be 8-10 character long.{" "}
-            </p>
+            </h1>
           </div>
-  
-          <form className="space-y-7 fit-content object-contain">
-            <div className="flex items-center gap-2 border-b-2 border-[#4E4E4E]  outline-none focus:border-blue-400 object-contain w-[350px]">
-              <div className="bg-white rounded-full p-[6px]">
-                <img className="w-[12px] " src={lockIcon} alt="" />
-              </div>
-              <input
-                type="password"
-                className="w-full p-2 text-sm text-[black] text-[16px]  bg-transparent border-[#4E4E4E] outline-none"
-                placeholder="Set your password"
-              />
-            </div>
-            <div className="flex items-center gap-2 border-b-2 border-[#4E4E4E]  outline-none focus:border-blue-400 object-contain w-[350px]">
-              <div className="bg-white rounded-full p-[6px]">
-                <img className="w-[12px] " src={lockIcon} alt="" />
-              </div>
-              <input
-                type="password"
-                className="w-full p-2 text-sm text-[black] text-[16px]  bg-transparent border-[#4E4E4E] outline-none"
-                placeholder="Re-enter password"
-              />
-            </div>
-            <span className="text-xs text-red-600">password field required</span>
-  
-            <input type="submit" value='Update password' className="block px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg cursor-pointer w-[350px]"/>
-             
-           
-          </form>
+          <p className="text-[16px] mb-[24px] text-[#4E4E4E] ">
+            Your password must be 8-10 character long.{" "}
+          </p>
         </div>
+
+        {/* <Form
+          form={form}
+          initialValues={{
+            remember: true,
+          }}
+          autoComplete="off"
+          onFinish={onFinish}
+          className="space-y-4 fit-content object-contain"
+        >
+          <div className="">
+            <Form.Item
+              name="set_password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Password!",
+                },
+              ]}
+            >
+              <Input.Password
+                size="large"
+                // onChange={handleChange}
+                placeholder="Set your password"
+                name="set_password"
+                prefix={
+                  <IconLock
+                    className="mr-2 bg-white rounded-full p-[6px]"
+                    size={28}
+                    color="#0071E3"
+                  />
+                }
+                style={{
+                  borderBottom: "2px solid #4E4E4E",
+                  height: "52px",
+                  background: "#C2E3FC",
+                  outline: "none",
+                  marginBottom: "20px",
+                }}
+                bordered={false}
+              />
+            </Form.Item>
+          </div>
+          <div className="">
+            <Form.Item
+              name="re_enter_password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Password!",
+                },
+              ]}
+            >
+              <Input.Password
+                size="large"
+                placeholder="Re-enter password"
+                name="re_enter_password"
+                prefix={
+                  <IconLock
+                    className="mr-2 bg-white rounded-full p-[6px]"
+                    size={28}
+                    color="#0071E3"
+                  />
+                }
+                style={{
+                  borderBottom: "2px solid #4E4E4E",
+                  height: "52px",
+                  background: "#C2E3FC",
+                  outline: "none",
+                  marginBottom: "20px",
+                }}
+                bordered={false}
+              />
+            </Form.Item>
+          </div>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="block w-[350px] h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
+            >
+              Update password
+            </Button>
+          </Form.Item>
+        </Form> */}
+
+        <Form
+          form={form}
+          name="dependencies"
+          autoComplete="off"
+          style={{
+            maxWidth: 600,
+          }}
+          layout="vertical"
+          className="space-y-4 fit-content object-contain"
+          onFinish={onFinish}
+        >
+        
+
+          <Form.Item
+            name="enter_password"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input.Password
+              size="large"
+              // onChange={handleChange}
+              placeholder="Set your password"
+              name="set_password"
+              prefix={
+                <IconLock
+                  className="mr-2 bg-white rounded-full p-[6px]"
+                  size={28}
+                  color="#0071E3"
+                />
+              }
+              style={{
+                borderBottom: "2px solid #4E4E4E",
+                height: "52px",
+                background: "#C2E3FC",
+                outline: "none",
+                marginBottom: "20px",
+              }}
+              bordered={false}
+            />
+          </Form.Item>
+
+          {/* Field */}
+          <Form.Item
+            name="re_enter_password"
+            dependencies={["password"]}
+            rules={[
+              {
+                required: true,
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("enter_password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("The new password that you entered do not match!")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password
+              size="large"
+              placeholder="Re-enter password"
+              name="re_enter_password"
+              prefix={
+                <IconLock
+                  className="mr-2 bg-white rounded-full p-[6px]"
+                  size={28}
+                  color="#0071E3"
+                />
+              }
+              style={{
+                borderBottom: "2px solid #4E4E4E",
+                height: "52px",
+                background: "#C2E3FC",
+                outline: "none",
+                marginBottom: "20px",
+              }}
+              bordered={false}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="block w-[350px] h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
+            >
+              Update password
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
-    );
-}
+    </div>
+  );
+};
 
 export default SetNewPassword;

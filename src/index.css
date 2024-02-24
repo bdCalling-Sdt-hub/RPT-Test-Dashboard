@@ -39,8 +39,51 @@
     border-radius:5px ;
 }
 
-/* .ant-upload{
+.ant-upload{
     background-color: white !important;
     width: 242px;
-    height: 242px;
+}
+/* .jodit-workplace{
+    min-height: 200px !important;
+} */
+div.ReactTags__tagInput {
+    width: 200px;
+    border-radius: 2px;
+    display: inline-block;
+}
+div.ReactTags__tagInput input.ReactTags__tagInputField,
+div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+    margin: 0;
+    font-size: 15px;
+    width: 100%;
+    border: 2px solid #EBF6FE;
+    padding: 6px 10px;
+    outline: none;
+}
+
+/* Styles for selected tags */
+div.ReactTags__selected span.ReactTags__tag {
+    border: 1px solid #ddd;
+    background: #EBF6FE;
+    font-size: 18px;
+    display: inline-block;
+    padding: 5px;
+    margin: 0 5px;
+    border-radius: 2px;
+}
+.ReactTags__remove{
+    color: #ff0000 !important;
+    margin-left: 8px;
+    cursor: pointer;
+}
+.ant-modal-content{
+    background-color: #C2E3FC !important ;
+    width: 600px !important;
+    padding: 50px !important;
+}
+.ant-input-affix-wrapper{
+    border-radius: 0%;
+}
+/* .ant-input {
+    background-color: #C2E3FC!important;
 } */

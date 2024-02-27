@@ -6,11 +6,12 @@ export const baseApi = createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:'https://jsonplaceholder.typicode.com'
     }),
-    endpoints:(builder)=>({
-        getUser:builder.query({
-            query:()=>'/users'
-        })
+    tagTypes:[],
+    endpoints:()=>({
+        // getUser:builder.query({
+        //     query:()=>'/users'
+        // })
     })
 })
 
-export const {useGetUserQuery} = baseApi;
+// export const {useGetUserQuery} = baseApi;

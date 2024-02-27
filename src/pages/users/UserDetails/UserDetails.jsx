@@ -25,7 +25,7 @@ const UserDetails = () => {
   };
   return (
     <div>
-      <div className="ml-[24px] mt-[44px] flex items-center pb-3 gap-2">
+      <div className="ml-[24px] cursor-pointer mt-[44px] flex items-center pb-3 gap-2">
         <MdOutlineKeyboardArrowLeft
           onClick={() => navigate("/dashboard/users")}
           size={34}

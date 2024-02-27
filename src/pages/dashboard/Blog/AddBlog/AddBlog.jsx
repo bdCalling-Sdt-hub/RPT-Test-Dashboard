@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { DatePicker, Form, Input } from "antd";
 import React, { useRef, useState } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -6,14 +6,16 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { WithContext as ReactTags } from "react-tag-input";
 import JoditEditor from "jodit-react";
+import dayjs from 'dayjs';
+
 
 
 
 const AddBlog = () => {
-  const [publisherName, setPublisherName] = useState("");
-  const [publishDate,setPublishDate] = useState("");
-  const [blogName,setBlogName] = useState("");
-  const [blogCoverImg,setBlogCoverImg] = useState('')
+  // const [publisherName, setPublisherName] = useState("");
+  // const [publishDate,setPublishDate] = useState("");
+  // const [blogName,setBlogName] = useState("");
+  // const [blogCoverImg,setBlogCoverImg] = useState('')
   const navigate = useNavigate();
   const [content, setContent] = useState("");
   const editor = useRef(null);
@@ -41,29 +43,33 @@ const AddBlog = () => {
       }
     },
   };
+
   const handleAddition = (tag) => {
     console.log(tag);
     setTags([...tags, tag]);
   };
-
-  const handleAddToBlog = (e)=>{
-    e.preventDefault();
-    const blogDetails = {
-      publisherName,
-      publishDate,
-      blogName,
-      blogCoverImg,
-      content,
-      tags
-
-
-    } 
-    console.log(blogDetails);
+  const handleAddBlog = (values)=>{
+    console.log({...values,tags,content,publisherDate:`${values.publisherDate.$D}-${values.publisherDate.$M + 1}-${values.publisherDate.$y}`});
   }
+
+  // const handleAddToBlog = (e)=>{
+  //   e.preventDefault();
+  //   const blogDetails = {
+  //     publisherName,
+  //     publishDate,
+  //     blogName,
+  //     blogCoverImg,
+  //     content,
+  //     tags
+
+
+  //   } 
+  //   console.log(blogDetails);
+  // }
  
   return (
     <div className="ml-[24px] overflow-auto">
-      <div className="mt-[44px] flex items-center pb-3 gap-2">
+      <div className="mt-[44px] cursor-pointer flex items-center pb-3 gap-2">
         <MdOutlineKeyboardArrowLeft
           onClick={() => navigate("/dashboard/blog/")}
           size={34}
@@ -71,10 +77,32 @@ const AddBlog = () => {
         <h1 className="text-[24px] text-primary font-semibold">Add Blog</h1>
       </div>
       <div>
+      <Form
+          name="basic"
+          labelCol={{ span: 22 }}
+          wrapperCol={{ span: 40 }}
+          layout="vertical"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={handleAddBlog}
+        //   onFinishFailed={handleCompanyInformationFailed}
+          autoComplete="off"
+        >
         <div className="flex-1">
+        <Form.Item
+              name="publisherName"
+              className="flex-1"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your First Name!",
+                },
+              ]}
+            >
           <Input
             name="publisherName"
-            onChange={(e) => setPublisherName(e.target.value)}
+            // onChange={(e) => setPublisherName(e.target.value)}
             placeholder="Publisher Name"
             className="p-4 bg-[white]
               rounded w-full 
@@ -85,25 +113,51 @@ const AddBlog = () => {
               gap-4 inline-flex outline-none focus:border-none"
             type="text"
           />
+           </Form.Item>
         </div>
         <div className="flex-1">
-          <Input
-            onChange={(e) => setPublishDate(e.target.value)}
+        <Form.Item
+              name="publisherDate"
+              className="flex-1"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your First Name!",
+                },
+              ]}
+            >
+
+          <DatePicker 
+            format="YYYY-MM-DD"
+            // onChange={(e) => setPublishDate(e.target.value)}
             placeholder="Publish Date"
+            showTime={false}
             className="p-4 bg-[white]
-              rounded 
+              rounded w-[100%]
               justify-start 
               border-none
               mt-[12px]
               items-center 
               gap-4 inline-flex outline-none focus:border-none"
-            type="date"
-            
+            // type="date"
+            // disabledDate={(current) => current && current < moment().endOf('day')}
           />
+           </Form.Item>
         </div>
         <div className="flex-1">
+        <Form.Item
+              name="blogName"
+              className="flex-1"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your First Name!",
+                },
+              ]}
+            >
+
           <Input
-            onChange={(e) => setBlogName(e.target.value)}
+            // onChange={(e) => setBlogName(e.target.value)}
             placeholder="Blog Name"
             className="p-4 bg-[white]
               rounded w-full 
@@ -114,11 +168,23 @@ const AddBlog = () => {
               gap-4 inline-flex outline-none focus:border-none"
             type="text"
           />
+              </Form.Item>
         </div>
         <div className="flex-1 mt-[16px]">
-          <label htmlFor="" className="text-[#222222]  text-[18px] font-medium">
+          {/* <label htmlFor="" className="text-[#222222]  text-[18px] font-medium">
             Upload Cover Image
-          </label>
+          </label> */}
+          <Form.Item
+            label={<span className="text-[#222222]  text-[18px] font-medium"> Upload Cover Image</span>}
+              name="blogImg"
+              className="flex-1"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your First Name!",
+                },
+              ]}
+            >
           <Upload
             className="p-4 bg-[white]
               rounded w-full 
@@ -129,6 +195,7 @@ const AddBlog = () => {
           >
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload>
+          </Form.Item>
         </div>
         <div className="flex-1 mt-[16px]">
           <label htmlFor="" className="text-[#222222]text-[18px] font-medium">
@@ -165,7 +232,8 @@ const AddBlog = () => {
           </div>
         </div>
         <Button
-        onClick={handleAddToBlog}
+        htmlType="submit"
+        // onClick={handleAddToBlog}
         block
         style={{
           marginTop: "30px",
@@ -177,6 +245,7 @@ const AddBlog = () => {
       >
         Add Blog
       </Button>
+      </Form>
       </div>
     </div>
   );

@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { Button, Checkbox, Form, Input } from "antd";
 import { IconLock } from "@tabler/icons-react";
 import { HiOutlineMailOpen } from "react-icons/hi";
-import { useGetUserQuery } from "../../../redux/api/baseApi";
+import { useGetUserQuery } from "../../../redux/features/authentication/loginApi";
+
 
 const SignIn = () => {
   const onFinish = (values) => {
@@ -128,13 +129,20 @@ const SignIn = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button
+            {/* <Button
               type="primary"
               htmlType="submit"
               className="block w-[350px] h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
             >
               Log in
-            </Button>
+            </Button> */}
+            <Link to="/dashboard"
+              // type="primary"
+              // htmlType="submit"
+              className="block text-center w-[350px] h-[56px] px-2 py-4 mt-2 hover:text-white text-white bg-[#3BA6F6] rounded-lg"
+            >
+              Log in
+            </Link>
           </Form.Item>
         </Form>
       </div>

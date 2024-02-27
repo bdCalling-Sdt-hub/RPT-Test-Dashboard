@@ -4,6 +4,7 @@ import { Badge, Dropdown, Button, Menu } from "antd";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaRegUser } from "react-icons/fa6";
 import { MdMenu } from "react-icons/md";
+import SearchBox from "../SearchBox/SearchBox";
 const Header = () => {
   const date = new Date(); // Assuming the input date is in ISO 8601 format (YYYY-MM-DD)
 
@@ -94,6 +95,9 @@ const Header = () => {
     <div className="flex justify-between items-center rounded-md mb-[24px] p-[16px] bg-[#FFFFFF]">
       <div>
         <MdMenu className="h-[42px] w-[42px] text-[#3BA6F6]" />
+      </div>
+      <div className="">
+        <SearchBox />
       </div>
       <div className="flex gap-5">
         {/* <Dropdown overlay={menu} placement="bottomRight" arrow> */}

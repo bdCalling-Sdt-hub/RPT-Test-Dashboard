@@ -145,7 +145,7 @@ const ProfileInformation = () => {
               </label>
               <Input
                 onChange={(e) => setDateOfBirth(e.target.value)}
-                placeholder="Email"
+                placeholder="Date Of Birth"
                 className="p-4 bg-[#EBF6FE]
                 rounded w-full 
                 justify-start 
@@ -154,7 +154,7 @@ const ProfileInformation = () => {
                 items-center 
                 gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
                 prefix={<CiCalendarDate size={20} />}
-                readOnly
+               
               />
             </div>
           </div>

@@ -25,7 +25,7 @@ const SignIn = () => {
       <div className="bg-[#C2E3FC] px-[144px] py-[124px] rounded-lg w-[638px]">
         <img src={logo} alt="" />
         <h1 className="text-[24px] font-medium mt-[24px] mb-[32px]">
-          Sign in to continue!
+          Sign In To Continue!
         </h1>
         <Form
           name="normal_login"
@@ -41,13 +41,13 @@ const SignIn = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your Email!",
+                message: "Please Input Your Email!",
               },
             ]}
           >
             <Input
               size="large"  
-              placeholder="Enter your email"
+              placeholder="Enter Your Email"
               name="email"
               prefix={
                 <HiOutlineMailOpen
@@ -73,14 +73,14 @@ const SignIn = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your Password!",
+                message: "Please Input Your Password!",
               },
             ]}
           >
             <Input.Password
               size="large"
               // onChange={handleChange}
-              placeholder="Enter your password"
+              placeholder="Enter Your Password"
               name="current_password"
               prefix={
                 <IconLock
@@ -100,14 +100,14 @@ const SignIn = () => {
             />
           </Form.Item>
 
-          <Form.Item>
+        
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>
                     <span className="text-[#3BA6F6] font-medium">
                       {" "}
-                      Remember me
+                      Remember Me
                     </span>
                   </Checkbox>
                 </Form.Item>
@@ -119,14 +119,17 @@ const SignIn = () => {
               />{" "} */}
                 {/* <span className="text-[#3BA6F6] font-medium">Remember me</span> */}
               </div>
+              <div>
+
               <Link
                 to="/forgot_password"
                 className="text-[#3BA6F6] font-medium"
               >
                 Forget password?
               </Link>
+              </div>
             </div>
-          </Form.Item>
+      
 
           <Form.Item>
             {/* <Button
@@ -141,7 +144,7 @@ const SignIn = () => {
               // htmlType="submit"
               className="block text-center w-[350px] h-[56px] px-2 py-4 mt-2 hover:text-white text-white bg-[#3BA6F6] rounded-lg"
             >
-              Log in
+              Log In
             </Link>
           </Form.Item>
         </Form>

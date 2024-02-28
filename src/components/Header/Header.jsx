@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Badge, Dropdown, Button, Menu } from "antd";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaRegUser } from "react-icons/fa6";
@@ -12,6 +12,8 @@ const Header = () => {
   const formattedDate = date.toLocaleDateString("en-US", options);
   const userData = JSON.parse(localStorage.getItem("yourInfo"));
   const [count, setCount] = useState(0);
+  const location = useLocation();
+  console.log(location);
 
   const navigate = useNavigate();
   // const notificationData = [
@@ -93,27 +95,34 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center rounded-md mb-[24px] p-[16px] bg-[#FFFFFF]">
-      <div>
+      <div className="flex items-center gap-5">
         <MdMenu className="h-[42px] w-[42px] text-[#3BA6F6]" />
+        {
+          location.pathname == "/dashboard/users" || location.pathname == '/dashboard/appointments' || location.pathname == '/dashboard/earnings' ? <div className="">
+          <SearchBox />
+        </div>:<></>
+        }
+        
       </div>
-      <div className="">
-        <SearchBox />
-      </div>
+
       <div className="flex gap-5">
         {/* <Dropdown overlay={menu} placement="bottomRight" arrow> */}
-          <div
-              onClick={(e) => navigate("notification")}
-            className="relative flex items-center "
-          >
-            <Badge style={{backgroundColor:"#3BA6F6"}} count={5}>
-              <IoIosNotificationsOutline
-                style={{ cursor: "pointer" }}
-                className={` bg-primary w-[52px] h-[52px] text-[#3BA6F6] border-2 border-[#3BA6F6] rounded-full p-2 `}
-              />
-            </Badge>
-          </div>
+        <div
+          onClick={(e) => navigate("notification")}
+          className="relative flex items-center "
+        >
+          <Badge style={{ backgroundColor: "#3BA6F6" }} count={5}>
+            <IoIosNotificationsOutline
+              style={{ cursor: "pointer" }}
+              className={` bg-primary w-[52px] h-[52px] text-[#3BA6F6] border-2 border-[#3BA6F6] rounded-full p-2 `}
+            />
+          </Badge>
+        </div>
         {/* </Dropdown> */}
-        <div onClick={() => navigate("profileinformation")} className="flex items-center cursor-pointer mr-[30px] bg-primary text-white rounded-full p-1">
+        <div
+          onClick={() => navigate("profileinformation")}
+          className="flex items-center cursor-pointer mr-[30px] bg-primary text-white rounded-full p-1"
+        >
           <FaRegUser className="text-[#3BA6F6] border-2 border-[#3BA6F6] rounded-full p-2 w-[52px] h-[52px]" />
         </div>
       </div>

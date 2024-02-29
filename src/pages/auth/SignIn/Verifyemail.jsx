@@ -1,23 +1,60 @@
 import logo from "../../../assets/signup/rtp_labs_logo.png";
 
 import { GoArrowLeft } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import OTPInput from "react-otp-input";
 import { useState } from "react";
+import baseURL from "../../../config";
+import Swal from "sweetalert2";
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState("");
+  const {email} = useParams();
+  const navigate = useNavigate();
+  console.log(email);
 
   const handleReset = () => {
+   
+    
     // const email= localStorage.getItem("resetEmail");
     // if(email){
     //   dispatch(forgetPassword({email : email}));
     // }
   };
 
-  const handleMatchOtp = () => {
-    // navigate("/auth/reset-password");
-    // dispatch(verifiedOtpReset(otp));
+  const handleMatchOtp = async() => {
+    
+    console.log(otp);
+    try{
+      const response = await baseURL.post(`/auth/verify-email`,{
+        email: email,
+        oneTimeCode: otp
+    });
+
+      console.log(response.data)
+      const token = response?.data?.data?.attributes.tokens?.access.token;
+      console.log(token);
+      if(response.data.code==200){
+          localStorage.setItem('token',token)
+          localStorage.setItem('user',response?.data?.data?.attributes?.user)
+          Swal.fire({
+              position: 'top-center',
+              icon: 'success',
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500
+          });
+          navigate(`/`);
+      }
+  }catch(error){
+      console.log("Registration Fail",error?.response?.data?.message);
+      Swal.fire({
+          icon: "error",
+          title: "Error...",
+          text: error?.response?.data?.message,
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+  }
   };
 
   return (

@@ -74,7 +74,7 @@ const MembershipCart = () => {
       </div>
       <div className="py-[30px]">
                 <div className="flex gap-5 justify-center">
-                    <Link to='editmembership'  className="px-[135px] py-[16px] text-[16px] cursor-pointer  bg-[#3BA6F6] rounded-lg text-white">Edit</Link>
+                    <Link to={`edit-membership/${1}`}  className="px-[135px] py-[16px] text-[16px] cursor-pointer  bg-[#3BA6F6] rounded-lg text-white">Edit</Link>
                     <p className="px-[135px] cursor-pointer py-[16px] text-[16px]  border-2 border-[#3BA6F6] rounded-lg text-[#3BA6F6]">Delete</p>
                 </div>
             </div>

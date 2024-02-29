@@ -52,7 +52,7 @@ const Earnings = () => {
           key: 'action',
           render: (_, record) => (
             <Space size="middle">
-              <Link to='/dashboard/earnings/transactiondetails' ><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></Link>
+              <Link to={`/dashboard/earnings/transaction-details/${record?.key}`} ><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></Link>
               <a><RxCross2 size={18} className='text-[red]'/></a>
             </Space>
           ),

@@ -11,7 +11,7 @@ const initialState = {
 
 export const login = createAsyncThunk('login',async (value,thunkApi)=>{
     try{
-        const response = await baseURL.post(`/login`,{email,password},{
+        const response = await baseURL.post(`auth/login`,{email,password},{
             headers: {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${localStorage.getItem('token')}`,

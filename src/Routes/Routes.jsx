@@ -25,6 +25,9 @@ import AboutUs from "../pages/dashboard/Setting/AboutUs";
 import EditAboutUs from "../pages/dashboard/Setting/EditAboutUs";
 import PrivateRoute from "./PrivateRoute";
 import SignIn from "../pages/auth/SignIn/SignIn";
+import RecentAppointmentsDetails from "../pages/dashboard/RecentAppointmentsDetails/RecentAppointmentsDetails";
+import Registration from "../pages/auth/SignIn/Registration";
+
 
 
 export const router = createBrowserRouter([
@@ -35,12 +38,17 @@ export const router = createBrowserRouter([
             {
                 path:'/',
                 element:<SignIn/>
-            },{
+            },
+            {
+              path:'/register',
+              element:<Registration/>
+            },
+            {
               path:'/forgot_password',
               element:<ForgotPassword/>
             },
             {
-              path:'/verify_email',
+              path:'/verify_email/:email',
               element:<VerifyEmail/>
             },
             {
@@ -75,7 +83,11 @@ export const router = createBrowserRouter([
                 element:<UserList/>
               },
               {
-                path:'users/usersdetails',
+                path:'recent-appointments/appointment-details/:id',
+                element:<RecentAppointmentsDetails/>
+              },
+              {
+                path:'users/users-details/:id',
                 element:<UserDetails/>
               },
               {
@@ -83,7 +95,7 @@ export const router = createBrowserRouter([
                 element: <Appointments/>
               },
               {
-                path: 'appointments/appointmentdetails', 
+                path: 'appointments/appointment-details/:id', 
                 element: <AppointmentDetails/>
               },
               {
@@ -91,12 +103,12 @@ export const router = createBrowserRouter([
                 element: <Earnings/>
               },
               {
-                path:'earnings/transactiondetails',
+                path:'earnings/transaction-details/:id',
                 element: <TransactionDetails/>
               },
             
               {
-                path: 'typesodtest',
+                path: 'types-of-test',
                 element:  <></>
               },
               {
@@ -108,7 +120,7 @@ export const router = createBrowserRouter([
                 element:  <AddMemberShip/>
               },
               {
-                path: 'membership/editmembership',
+                path: 'membership/edit-membership/:id',
                 element:  <EditMemberShip/>
               },
               {
@@ -120,7 +132,7 @@ export const router = createBrowserRouter([
                 element:  <AddBlog/>
               },
               {
-                path: 'blog/edit-blog', 
+                path: 'blog/edit-blog/:id', 
                 element:  <EditBlog />
               },
               {

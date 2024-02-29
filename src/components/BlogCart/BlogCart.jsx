@@ -30,7 +30,7 @@ const BlogCart = () => {
           <div className="my-[32px]">
                 <div className="flex gap-[24px] justify-center">
                     <p className="flex-1 px-[60px] py-[16px] text-[16px] cursor-pointer  bg-[#3BA6F6] rounded-lg text-white text-center">Delete Blog</p>
-                    <Link to='/dashboard/blog/edit-blog' className="flex-1 px-[60px] cursor-pointer py-[16px] text-[16px]  border-2 border-[#3BA6F6] rounded-lg text-[#3BA6F6] text-center">Edit Blog</Link>
+                    <Link to={`edit-blog/${1}`} className="flex-1 px-[60px] cursor-pointer py-[16px] text-[16px]  border-2 border-[#3BA6F6] rounded-lg text-[#3BA6F6] text-center">Edit Blog</Link>
                 </div>
             </div>
       </div>

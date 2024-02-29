@@ -5,6 +5,7 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { IconLock } from "@tabler/icons-react";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { useGetUserQuery } from "../../../redux/features/authentication/loginApi";
+import Loading from "../../../components/Loading/Loading";
 
 
 const SignIn = () => {
@@ -14,7 +15,7 @@ const SignIn = () => {
 
   const {data,isError,isLoading,isSuccess} = useGetUserQuery();
   if(isLoading){
-    return 'Loading....'
+    return <Loading size={"large"}/>
   }
   if(isSuccess){
 
@@ -128,6 +129,14 @@ const SignIn = () => {
                 Forget password?
               </Link>
               </div>
+            </div>
+            <div>
+            <Link
+                to="/register"
+                className="text-[#3BA6F6] font-medium"
+              >
+                Do not have account? Register Please
+              </Link>
             </div>
       
 

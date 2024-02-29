@@ -1,6 +1,7 @@
 import { Space, Table, Tag } from 'antd';
 import { BsInfoCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
+import { Link } from 'react-router-dom';
 const columns = [
     {
         title: '#SI',
@@ -52,7 +53,7 @@ const columns = [
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></a>
+          <Link to={`recent-appointments/appointment-details/${record?.key}`}><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></Link>
           <a><RxCross2 size={18} className='text-[red]'/></a>
         </Space>
       ),

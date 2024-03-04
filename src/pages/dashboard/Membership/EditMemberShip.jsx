@@ -1,17 +1,55 @@
 import { Input } from "antd";
 import { useState } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form } from "antd";
-
+import { useGetSingleMembershipQuery } from "../../../redux/features/Membership/getSingleMembershipApi";
+import Loading from "../../../components/Loading/Loading";
+import { useEditMembershipMutation } from "../../../redux/features/Membership/editMembershipApi";
+import Swal from "sweetalert2";
 const EditMemberShip = () => {
   const navigate = useNavigate();
-
+  const {id} = useParams();
+  const {data:singleMembership,isError,isLoading,isSuccess} = useGetSingleMembershipQuery(id);
+  const [editMembership, { data: editMembershipData, error: editMembershipError }] = useEditMembershipMutation();
+  
+  if(isLoading){
+    return <Loading/>
+  }
   const handleEditMembership = (values) => {
-    console.log(values);
+    try {
+      const updateValues = {...values,_id:id}
+      if (!updateValues._id) {
+        console.error("Error: id is undefined in values.");
+        return;
+      }
+      editMembership(updateValues);
+      console.log(editMembershipData);
+      // console.log(editMembershipError);
+      if(editMembershipData?.code == 200){
+        Swal.fire({
+          position: 'top-center',
+          icon: 'success',
+          title: editMembershipData?.message,
+          showConfirmButton: false,
+          timer: 1500
+      });
+      navigate('/dashboard/membership', { replace: true });
+      window.location.reload();
+      }
+      // Access the data property of the response
+    } catch (error) {
+      // console.error("Edit Membership Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error...",
+        text: "Please Try again",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
+    }
   };
-
+const initialMembership = singleMembership?.data?.attributes
     return (
       <div className="ml-[24px] overflow-auto">
       <div className="mt-[32px] flex items-center pb-3 gap-2 cursor-pointer">
@@ -33,7 +71,8 @@ const EditMemberShip = () => {
             remember: true,
           }}
           onFinish={handleEditMembership}
-          // initialValues={}
+          // eslint-disable-next-line react/jsx-no-duplicate-props
+          // initialValues={singleMembership?.data?.attributes}
           autoComplete="off"
         >
           <div className="flex flex-col gap-[24px]">
@@ -45,7 +84,7 @@ const EditMemberShip = () => {
                     Membership Name
                   </span>
                 }
-                name="membershipName"
+                name="title"
                 className="flex-1"
                 rules={[
                   {
@@ -53,6 +92,7 @@ const EditMemberShip = () => {
                     message: "Please input your  Membership Name!",
                   },
                 ]}
+                initialValue={initialMembership?.title}
               >
                 <Input
                   // onChange={(e) => setMemberShiptName(e.target.value)}
@@ -65,6 +105,7 @@ const EditMemberShip = () => {
               items-center 
               gap-4 inline-flex outline-none focus:border-none"
                   // type="text"
+                
                 />
               </Form.Item>
             </div>
@@ -84,6 +125,7 @@ const EditMemberShip = () => {
                     message: "Please input your Price!",
                   },
                 ]}
+                initialValue={initialMembership?.price}
               >
                 <Input
                   // onChange={(e) => setPrice(e.target.value)}
@@ -102,7 +144,7 @@ const EditMemberShip = () => {
             <div className="flex gap-[25px]">
               <div className="flex-1">
                 <Form.Item
-                  name="priceDrugTest"
+                  name="PerDrugTestPrice"
                   label={
                     <span className="text-[#222222] text-[18px] font-medium">
                       Price per Drug Test
@@ -115,6 +157,7 @@ const EditMemberShip = () => {
                       message: "Please input your Price per Drug Test!",
                     },
                   ]}
+                  initialValue={initialMembership?.PerDrugTestPrice}
                 >
                   <Input
                     // onChange={(e) => setPriceDrugTest(e.target.value)}
@@ -137,7 +180,7 @@ const EditMemberShip = () => {
                       Price Per Breath Alcohol Test
                     </span>
                   }
-                  name="priceAlcoholTest"
+                  name="PerBreathAlcoholTestPrice"
                   className="flex-1"
                   rules={[
                     {
@@ -146,6 +189,8 @@ const EditMemberShip = () => {
                         "Please input your Price Per Breath Alcohol Test!",
                     },
                   ]}
+                  initialValue={initialMembership?.PerBreathAlcoholTestPrice
+                    }
                 >
                   <Input
                     // onChange={(e) => setPriceAlcoholTest(e.target.value)}
@@ -201,6 +246,7 @@ const EditMemberShip = () => {
                     },
                   },
                 ]}
+                initialValue={initialMembership?.features}
               >
                 {(fields, { add, remove }, { errors }) => (
                   <>

@@ -1,12 +1,36 @@
 import logo from "../../../assets/signup/rtp_labs_logo.png";
 import { GoArrowLeft } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import { HiOutlineMailOpen } from "react-icons/hi";
+import baseURL from "../../../config";
+import Swal from "sweetalert2";
 
 const ForgotPassword = () => {
-  const onFinish = (values) => {
+  const navigate = useNavigate();
+  const onFinish = async(values) => {
     console.log("Received values of form: ", values);
+    try{
+      const response = await baseURL.post(`/auth/forgot-password`,values);
+      if(response.data.code==200){
+          Swal.fire({
+              position: 'top-center',
+              icon: 'success',
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500
+          });
+          navigate(`/verify_email_password/${values.email}`);
+      }
+  }catch(error){
+      console.log("Registration Fail",error?.response?.data?.message);
+      Swal.fire({
+          icon: "error",
+          title: "Error...",
+          text: error?.response?.data?.message,
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+  }
   };
   return (
     <div className="min-h-[100vh] bg-[#EBF6FE] flex justify-center items-center">
@@ -28,7 +52,7 @@ const ForgotPassword = () => {
           </p>
         </div>
 
-        <Form   initialValues={{
+        <Form initialValues={{
             remember: true,
           }}
           onFinish={onFinish} className="space-y-7 fit-content object-contain">

@@ -27,6 +27,7 @@ import PrivateRoute from "./PrivateRoute";
 import SignIn from "../pages/auth/SignIn/SignIn";
 import RecentAppointmentsDetails from "../pages/dashboard/RecentAppointmentsDetails/RecentAppointmentsDetails";
 import Registration from "../pages/auth/SignIn/Registration";
+import VerifyEmailForPassword from "../pages/auth/SignIn/VerifyEmailForPassword";
 
 
 
@@ -44,12 +45,16 @@ export const router = createBrowserRouter([
               element:<Registration/>
             },
             {
-              path:'/forgot_password',
+              path:'/forgot_password/',
               element:<ForgotPassword/>
             },
             {
               path:'/verify_email/:email',
               element:<VerifyEmail/>
+            },
+            {
+              path:'/verify_email_password/:email',
+              element:<VerifyEmailForPassword/>
             },
             {
               path:'/set_new_password',

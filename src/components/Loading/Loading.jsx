@@ -1,6 +1,6 @@
 import { Spin } from "antd";
 
-const Loading = ({size}) => {
+const Loading = ({size='large'}) => {
   return (
     <div className="example">
       <Spin size={size} />

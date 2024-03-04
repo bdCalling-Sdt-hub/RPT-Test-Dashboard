@@ -1,26 +1,48 @@
 import logo from "../../../assets/signup/rtp_labs_logo.png";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, Form, Input } from "antd";
 import { IconLock } from "@tabler/icons-react";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { useGetUserQuery } from "../../../redux/features/authentication/loginApi";
 import Loading from "../../../components/Loading/Loading";
+import { login } from "../../../redux/apiSlices/authentication/loginSlice";
+import Swal from "sweetalert2";
 
 
 const SignIn = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {isSuccess,user} = useSelector((state)=>state.login)
+  const onFinish = ({email,password,remember}) => {
+    console.log("Received values of form: ", email,password);
+    dispatch(login({email,password}))
+    .then(response => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login Successfully",
+        showConfirmButton: false,
+        timer: 1500
+      }).then(() => {
+        navigate("/dashboard")
+      });
+    })
+    .catch(error => {
+      console.log(error)
+    });
+  
+
   };
+  console.log(user,isSuccess);
+  // const {data,isError,isLoading,isSuccess} = useGetUserQuery();
+  // if(isLoading){
+  //   return <Loading size={"large"}/>
+  // }
+  // if(isSuccess){
 
-  const {data,isError,isLoading,isSuccess} = useGetUserQuery();
-  if(isLoading){
-    return <Loading size={"large"}/>
-  }
-  if(isSuccess){
-
-    console.log(data);
-  }
+  //   console.log(data);
+  // }
   return (
     <div className="min-h-[100vh] bg-[#EBF6FE] flex justify-center items-center">
       <div className="bg-[#C2E3FC] px-[144px] py-[124px] rounded-lg w-[638px]">
@@ -141,20 +163,20 @@ const SignIn = () => {
       
 
           <Form.Item>
-            {/* <Button
+            <Button
               type="primary"
               htmlType="submit"
               className="block w-[350px] h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
             >
               Log in
-            </Button> */}
-            <Link to="/dashboard"
+            </Button>
+            {/* <Link to="/dashboard"
               // type="primary"
               // htmlType="submit"
               className="block text-center w-[350px] h-[56px] px-2 py-4 mt-2 hover:text-white text-white bg-[#3BA6F6] rounded-lg"
             >
               Log In
-            </Link>
+            </Link> */}
           </Form.Item>
         </Form>
       </div>

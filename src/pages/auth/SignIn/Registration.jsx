@@ -19,6 +19,7 @@ const Registration = () => {
 
   const handleRegister = async (values) => {
     console.log("Received values of form: ", values);
+    
     try{
         const response = await baseURL.post(`/auth/register`,{...values,role:"employee"});
 

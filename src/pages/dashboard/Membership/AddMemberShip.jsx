@@ -4,6 +4,8 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form } from "antd";
+import baseURL from "../../../config";
+import Swal from "sweetalert2";
 
 const AddMemberShip = () => {
   // const [memberShipName, setMemberShiptName] = useState("");
@@ -25,8 +27,38 @@ const AddMemberShip = () => {
   //   console.log(data);
   // };
 
-  const handleAddMembership = (values) => {
+  const handleAddMembership = async (values) => {
     console.log(values);
+    try{
+      const response = await baseURL.post(`/membership`,values,{
+        headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+           
+        }});
+
+      console.log(response.data)
+      
+      if(response.data.code==201){
+          Swal.fire({
+              position: 'top-center',
+              icon: 'success',
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500
+          });
+          navigate('/dashboard/membership', { replace: true });
+          window.location.reload();
+      }
+  }catch(error){
+      console.log("Registration Fail",error?.response?.data?.message);
+      Swal.fire({
+          icon: "error",
+          title: "Error...",
+          text: error?.response?.data?.message,
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+  }
   };
 
   // const handleInputChange = (index, value) => {
@@ -69,7 +101,7 @@ const AddMemberShip = () => {
                     Membership Name
                   </span>
                 }
-                name="membershipName"
+                name="title"
                 className="flex-1"
                 rules={[
                   {
@@ -126,7 +158,7 @@ const AddMemberShip = () => {
             <div className="flex gap-[25px]">
               <div className="flex-1">
                 <Form.Item
-                  name="priceDrugTest"
+                  name="PerDrugTestPrice"
                   label={
                     <span className="text-[#222222] text-[18px] font-medium">
                       Price per Drug Test
@@ -161,7 +193,7 @@ const AddMemberShip = () => {
                       Price Per Breath Alcohol Test
                     </span>
                   }
-                  name="priceAlcoholTest"
+                  name="PerBreathAlcoholTestPrice"
                   className="flex-1"
                   rules={[
                     {

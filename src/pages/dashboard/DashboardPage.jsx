@@ -12,7 +12,7 @@ const DashboardPage = () => {
             </div>
             <div className='ml-[24px] flex gap-[16px]'>
                 <BarChartIncomeRatio/>
-                <GenderRatio/>
+                {/* <GenderRatio/> */}
                 
             </div>
             <div className='ml-[24px] '>

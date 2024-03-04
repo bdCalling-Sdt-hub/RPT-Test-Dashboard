@@ -51,10 +51,10 @@ const Setting = () => {
   };
 
   const settingsItem = [
-    {
-      title: "Notification",
-      path: "notification",
-    },
+    // {
+    //   title: "Notification",
+    //   path: "notification",
+    // },
     {
       title: "Change password",
       path: "change-password",

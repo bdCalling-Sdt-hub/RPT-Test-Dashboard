@@ -51,10 +51,7 @@
     border-radius:5px ;
 }
 
-.ant-upload{
-    background-color: white !important;
-    width: 242px;
-}
+
 /* .jodit-workplace{
     min-height: 200px !important;
 } */
@@ -99,7 +96,11 @@ div.ReactTags__selected span.ReactTags__tag {
 /* .ant-input {
     background-color: #C2E3FC!important;
 } */
-
+.ant-upload{
+  background-color: white !important;
+  width: 242px !important;
+  border-radius: 40%;
+}
 .dynamic-delete-button {
     position: relative;
     top: 4px;

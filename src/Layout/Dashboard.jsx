@@ -73,7 +73,7 @@ const Dashboard = () => {
               
               </NavLink>
 
-              <li className="cursor-pointer">
+              {/* <li className="cursor-pointer">
                 <details className="group">
                   <summary className="flex text-white gap-2 items-center justify-between text-[18px] p-[20px] bg-[#3BA6F6] mx-[16px] rounded-lg font-medium marker:content-none hover:cursor-pointer">
                     <span className="flex gap-2">
@@ -130,7 +130,7 @@ const Dashboard = () => {
                     </ul>
                   </article>
                 </details>
-              </li>
+              </li> */}
               <NavLink
                   to="/dashboard/membership"
                   className={({ isActive, isPending }) =>

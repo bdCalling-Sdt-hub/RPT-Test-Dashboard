@@ -4,9 +4,13 @@ import { Space, Table } from "antd";
 import { BsInfoCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { useGetAppointmentQuery } from "../../../redux/features/getAppointmentApi";
+import Loading from "../../../components/Loading/Loading";
 
 
 const Appointments = () => {
+  const {data:allAppointment ,isError,isLoading,isSuccess} = useGetAppointmentQuery();
+
     const columns = [
     {
         title: '#SI',
@@ -57,7 +61,7 @@ const Appointments = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link to={`/dashboard/appointments/appointment-details/${record?.key}`} ><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></Link>
+          <Link to={`/dashboard/appointments/appointment-details/${record?._id}`} ><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></Link>
           <a><RxCross2 size={18} className='text-[red]'/></a>
         </Space>
       ),
@@ -201,6 +205,13 @@ const Appointments = () => {
     const onChange = (date, dateString) => {
         console.log(date, dateString);
       };
+
+    if(isLoading){
+      return <Loading/>
+    }  
+      if(isSuccess){
+        console.log(allAppointment?.data?.attributes?.results);
+      }
     return (
         <div>
            <div className="ml-[24px] mt-[44px]">
@@ -215,7 +226,7 @@ const Appointments = () => {
             </div>
           </div>
           <div className='ml-[24px] mt-[24px] bg-white rounded-lg'>
-               <AllUserList data={data} columns={columns} />
+               <AllUserList data={allAppointment?.data?.attributes?.results} columns={columns} />
           </div>
         </div>
     );

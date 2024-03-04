@@ -1,13 +1,18 @@
 import { useRef } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import html2canvas from 'html2canvas';
+import { useGetSingleAppointmentQuery } from "../../../redux/features/singleAppointmentApi";
+import Loading from "../../../components/Loading/Loading";
 
 
 const AppointmentDetails = () => {
     const componentRef = useRef();
     const navigate = useNavigate();
+    const {id} = useParams();
+    const {data,isError,isLoading,isSuccess} = useGetSingleAppointmentQuery(id)
+    console.log(id);
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -24,7 +29,10 @@ const AppointmentDetails = () => {
           link.click();
         });
       };
-
+      if(isLoading){
+        return <Loading/>
+      }
+      console.log(data);
     return (
         <div>
            <div className="ml-[24px] cursor-pointer mt-[44px] flex items-center pb-3 gap-2">

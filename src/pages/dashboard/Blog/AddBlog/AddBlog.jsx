@@ -7,6 +7,8 @@ import { Button, message, Upload } from "antd";
 import { WithContext as ReactTags } from "react-tag-input";
 import JoditEditor from "jodit-react";
 import dayjs from 'dayjs';
+import baseURL from "../../../../config";
+import Swal from "sweetalert2";
 
 
 
@@ -19,10 +21,10 @@ const AddBlog = () => {
   const navigate = useNavigate();
   const [content, setContent] = useState("");
   const editor = useRef(null);
-  const [tags, setTags] = useState([]);
-  const handleDelete = (i) => {
-    setTags(tags?.filter((tag, index) => index !== i));
-  };
+  // const [tags, setTags] = useState([]);
+  // const handleDelete = (i) => {
+  //   setTags(tags?.filter((tag, index) => index !== i));
+  // };
 
   const props = {
     name: "file",
@@ -36,7 +38,6 @@ const AddBlog = () => {
       }
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
-        setBlogCoverImg(info.file.name)
 
       } else if (info.file.status === "error") {
         message.error(`${info.file.name} file upload failed.`);
@@ -44,12 +45,57 @@ const AddBlog = () => {
     },
   };
 
-  const handleAddition = (tag) => {
-    console.log(tag);
-    setTags([...tags, tag]);
-  };
-  const handleAddBlog = (values)=>{
-    console.log({...values,tags,content,publisherDate:`${values.publisherDate.$D}-${values.publisherDate.$M + 1}-${values.publisherDate.$y}`});
+  // const handleAddition = (tag) => {
+  //   console.log(tag);
+  //   setTags([...tags, tag]);
+  // };
+  const handleAddBlog = async (values)=>{
+    console.log({...values,content});
+    const blogData = {...values,content}
+    console.log(blogData);
+    const formData = new FormData();
+
+
+    //Append individual fields to  the FormDAta object
+    formData.append("author",blogData?.author)
+    formData.append("title",blogData?.title)
+    formData.append("content",blogData?.content)
+    formData.append("description",blogData?.description)
+    formData.append("tags",JSON.stringify(blogData?.tags))
+    if(blogData?.image){
+      formData.append("image",blogData?.image?.fileList[0].originFileObj)
+    }
+    try{
+      const response = await baseURL.post(`/blog`,formData,{
+        headers: {
+         "Content-Type": "multipart/form-data",
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+           
+        }});
+
+      console.log(response.data)
+      
+      if(response.data.code==201){
+          Swal.fire({
+              position: 'top-center',
+              icon: 'success',
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500
+          });
+          navigate('/dashboard/blog', { replace: true });
+          window.location.reload();
+      }
+  }catch(error){
+      console.log("Registration Fail",error?.response?.data?.message);
+      Swal.fire({
+          icon: "error",
+          title: "Error...",
+          text: error?.response?.data?.message,
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+  }
+
   }
 
   // const handleAddToBlog = (e)=>{
@@ -91,7 +137,7 @@ const AddBlog = () => {
         >
         <div className="flex-1">
         <Form.Item
-              name="publisherName"
+              name="author"
               className="flex-1"
               rules={[
                 {
@@ -101,7 +147,7 @@ const AddBlog = () => {
               ]}
             >
           <Input
-            name="publisherName"
+            // name="publisherName"
             // onChange={(e) => setPublisherName(e.target.value)}
             placeholder="Publisher Name"
             className="p-4 bg-[white]
@@ -113,10 +159,10 @@ const AddBlog = () => {
               gap-4 inline-flex outline-none focus:border-none"
             type="text"
           />
-           </Form.Item>
+        </Form.Item>
         </div>
         <div className="flex-1">
-        <Form.Item
+        {/* <Form.Item
               name="publisherDate"
               className="flex-1"
               rules={[
@@ -142,11 +188,11 @@ const AddBlog = () => {
             // type="date"
             // disabledDate={(current) => current && current < moment().endOf('day')}
           />
-           </Form.Item>
+        </Form.Item> */}
         </div>
         <div className="flex-1">
         <Form.Item
-              name="blogName"
+              name="title"
               className="flex-1"
               rules={[
                 {
@@ -168,7 +214,38 @@ const AddBlog = () => {
               gap-4 inline-flex outline-none focus:border-none"
             type="text"
           />
-              </Form.Item>
+        </Form.Item>
+        </div>
+        <div className="flex-1">
+        <Form.Item
+              name="description"
+              className="flex-1"
+              
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your First Name!",
+                },
+                {
+                  max: 100,
+                  message: "Description must be at most 100 characters.",
+                },
+              ]}
+            >
+
+          <Input.TextArea
+            // onChange={(e) => setBlogName(e.target.value)}
+            placeholder="Short Description"
+            className="p-4 bg-[white]
+              rounded w-full 
+              justify-start 
+              border-none
+              mt-[12px]
+              items-center 
+              gap-4 inline-flex outline-none focus:border-none"
+            type="text"
+          />
+        </Form.Item>
         </div>
         <div className="flex-1 mt-[16px]">
           {/* <label htmlFor="" className="text-[#222222]  text-[18px] font-medium">
@@ -176,7 +253,7 @@ const AddBlog = () => {
           </label> */}
           <Form.Item
             label={<span className="text-[#222222]  text-[18px] font-medium"> Upload Cover Image</span>}
-              name="blogImg"
+              name="image"
               className="flex-1"
               rules={[
                 {
@@ -212,7 +289,7 @@ const AddBlog = () => {
           </div>
         </div>
 
-        <div className="flex-1 mt-[16px]">
+        {/* <div className="flex-1 mt-[16px]">
           <label htmlFor="" className="text-[#222222]text-[18px] font-medium">
             Add Tag
           </label>
@@ -230,7 +307,7 @@ const AddBlog = () => {
               inputFieldPosition="inline"
             />
           </div>
-        </div>
+        </div> */}
         <Button
         htmlType="submit"
         // onClick={handleAddToBlog}

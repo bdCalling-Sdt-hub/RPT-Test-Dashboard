@@ -10,15 +10,20 @@ const initialState = {
 }
 
 export const login = createAsyncThunk('login',async (value,thunkApi)=>{
+    console.log("redux",value);
     try{
-        const response = await baseURL.post(`auth/login`,{email,password},{
+        const response = await baseURL.post(`auth/login`,value,{
             headers: {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${localStorage.getItem('token')}`,
             }
         })
-        localStorage.setItem('token', response?.data?.access_token);
-        return response?.data.user
+        console.log(response);
+        console.log(response?.data?.data?.attributes?.tokens?.access?.token);
+        localStorage.setItem('token', response?.data?.data?.attributes?.tokens?.access?.token);
+        localStorage.setItem('login-user',JSON.stringify(response?.data?.data?.attributes))
+        localStorage.setItem('user-update',JSON.stringify(response?.data?.data?.attributes?.user))
+        return response?.data?.data?.attributes?.user
     }catch(error){
         const message = error?.message
         return thunkApi.rejectWithValue(message);
@@ -51,5 +56,7 @@ export const loginSlice = createSlice({
         })
     }
 })
+
+
 
 export default loginSlice.reducer;

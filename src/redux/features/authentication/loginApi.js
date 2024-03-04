@@ -8,4 +8,4 @@ const loginApi = baseApi.injectEndpoints({
     })
 })
 
-export const {useGetUserQuery} = loginApi
+export const {useGetUserQuery} = loginApi;

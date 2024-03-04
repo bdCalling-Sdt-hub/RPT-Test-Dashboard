@@ -36,7 +36,7 @@ const VerifyEmail = () => {
       console.log(token);
       if(response.data.code==200){
           localStorage.setItem('token',token)
-          localStorage.setItem('user',response?.data?.data?.attributes?.user)
+          localStorage.setItem('user',JSON.stringify(response?.data?.data?.attributes?.user))
           Swal.fire({
               position: 'top-center',
               icon: 'success',
@@ -44,7 +44,7 @@ const VerifyEmail = () => {
               showConfirmButton: false,
               timer: 1500
           });
-          navigate(`/`);
+          navigate(`/dashboard`);
       }
   }catch(error){
       console.log("Registration Fail",error?.response?.data?.message);

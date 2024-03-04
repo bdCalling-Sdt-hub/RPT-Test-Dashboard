@@ -84,7 +84,7 @@ const BarChartIncomeRatio = () => {
         console.log(date, dateString);
       };
     return (
-        <div className="bg-white w-[66%] h-[318px] mt-5 rounded-xl border-1 shadow-xl border-secondary ">
+        <div className="bg-white w-[100%]  h-[318px] mt-5 rounded-xl border-1 shadow-xl border-secondary ">
         <div className="flex justify-between p-[16px]">
           <div>
             <h1 className="text-[20px] font-medium">Earning</h1>
@@ -106,7 +106,7 @@ const BarChartIncomeRatio = () => {
         <div>
       
           <BarChart
-            width={990}
+            width={1500}
             height={250}
             data={data}
             margin={{

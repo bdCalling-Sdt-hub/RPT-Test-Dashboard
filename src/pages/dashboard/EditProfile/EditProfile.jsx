@@ -1,11 +1,14 @@
 import { Button, DatePicker, Form, Input, Upload, message } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
 import { LuImagePlus } from "react-icons/lu";
+import styles from "./EditProfile.module.css";
+import baseURL from "../../../config";
+import Swal from "sweetalert2";
 
 // const getBase64 = (img, callback) => {
 //   const reader = new FileReader();
@@ -26,13 +29,31 @@ import { LuImagePlus } from "react-icons/lu";
 
 const EditProfile = () => {
   // State to store the image URL
-  const [imageUrl, setImageUrl] = useState(
-    "https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg"
+  const [currentUser, setCurrentUser] = useState();
+  const [phoneNumber, setPhoneNumber] = useState(currentUser?.phoneNumber);
+  const [imageUrl, setImageUrl] = useState( );
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const [fileList, setFileList] = useState([
+    // {
+    //   uid: "-1",
+    //   name: "image.png",
+    //   status: "done",
+    //   url: `${baseUrl}${singleBlog?.image?.url}`,
+    // },
+  ]
   );
-  const [phoneNumber, setPhoneNumber] = useState("");
-
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user-update");
+    const user = JSON.parse(storedUser);
+    console.log(user);
+    setCurrentUser(user);
+    setPhoneNumber(user?.phoneNumber);
+    setImageUrl(`${baseUrl}${user?.image?.url}`);
+  }, []);
+ 
   const navigate = useNavigate();
 
+console.log(imageUrl);
   const props = {
     action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
     listType: "picture",
@@ -64,21 +85,64 @@ const EditProfile = () => {
       });
     },
   };
-  const handleUpdateProfile = (values) => {
-    console.log({
+  const handleUpdateProfile = async(values) => {
+    const updateProfile = {
       ...values,
-      imageUrl,
+      image:fileList[0]?.originFileObj,
       dateOfBirth: `${values.dateOfBirth.$D}-${values.dateOfBirth.$M + 1}-${
         values.dateOfBirth.$y
       }`,
       phoneNumber,
-    });
+    }
+    const formData = new FormData();
+    formData.append("name", updateProfile?.name);
+    formData.append("email", updateProfile?.email);
+    formData.append("phoneNumber", updateProfile?.phoneNumber);
+    formData.append("dateOfBirth", updateProfile?.dateOfBirth);
+    if (fileList[0]?.originFileObj) {
+      formData.append(
+        "image",
+        fileList[0]?.originFileObj
+      );
+    }
+    try{
+      const response = await baseURL.patch(`/users/${currentUser?.id}`,formData);
+
+  
+      
+      if(response.data.code==200){
+          Swal.fire({
+              position: 'top-center',
+              icon: 'success',
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500
+          });
+          localStorage.removeItem("user-update")
+          localStorage.setItem("user-update",JSON.stringify(response?.data?.data?.attributes))
+          console.log(response.data)
+          // navigate('/dashboard/', { replace: true });
+          // window.location.reload();
+      }
+  }catch(error){
+      console.log("Registration Fail",error?.response?.data?.message);
+      Swal.fire({
+          icon: "error",
+          title: "Error...",
+          text: error?.response?.data?.message,
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+  }
+    console.log(updateProfile);
   };
+console.log(fileList[0]?.originFileObj);
+  console.log(currentUser?.email);
+  console.log(currentUser?.name);
   return (
     <div>
-      <div className="flex  items-center ml-[24px] mt-[40px] mb-[63px]">
+      <div  onClick={() => navigate("/dashboard/profileinformation")} className="flex cursor-pointer  items-center ml-[24px] mt-[40px] mb-[63px]">
         <MdOutlineKeyboardArrowLeft
-          onClick={() => navigate("/dashboard/profileinformation")}
+         
           size={30}
         />
         <h1 className="text-[20px] font-medium"> Edit Profile</h1>
@@ -90,11 +154,14 @@ const EditProfile = () => {
           wrapperCol={{ span: 40 }}
           layout="vertical"
           initialValues={{
-            remember: true,
+            name: currentUser?.name,
+            email: currentUser?.email,
+            dateOfBirth: currentUser?.dateOfBirth, // Make sure to use moment for DatePicker
           }}
+          autoComplete="off"
+          
           onFinish={handleUpdateProfile}
           //   onFinishFailed={handleCompanyInformationFailed}
-          autoComplete="off"
         >
           <div className="flex ">
             <div className="w-[33%] ml-[24px] flex flex-col justify-center items-center gap-[30px]">
@@ -108,22 +175,15 @@ const EditProfile = () => {
                   {...props}
                   name="avatar"
                   listType="picture-circle"
-                  className="avatar-uploader-aiman"
+                  className={styles.avatarUploader}
+                  fileList={fileList} 
+                  // className={styles.ant-upload}
                   showUploadList={false}
                   action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                   // beforeUpload={beforeUpload}
-                  onChange={(info) => {
-                    if (info.file.status !== "uploading") {
-                      console.log(info?.file, info.fileList);
-                      // setImageUrl(info?.file?.name)
-                    }
-                    if (info.file.status === "done") {
-                      message.success(
-                        `${info.file.name} file uploaded successfully`
-                      );
-                    } else if (info.file.status === "error") {
-                      message.error(`${info.file.name} file upload failed.`);
-                    }
+                  onChange={({ fileList: newFileList }) => {
+                    // console.log(fileList?.fileList[0].originFileObj);
+                    setFileList(newFileList);
                   }}
                 >
                   <img
@@ -165,9 +225,11 @@ const EditProfile = () => {
                 </div>
               </div>
               <div className="flex flex-col justify-center items-center">
-                <p className="text-[20px] text-[#4E4E4E]">Admin</p>
+                <p className="text-[20px] text-[#4E4E4E]">
+                  {currentUser?.role.toUpperCase()}
+                </p>
                 <h1 className="text-[#222222] text-[30px] font-medium">
-                  Bessie Cooper
+                  {currentUser?.name.toUpperCase()}
                 </h1>
               </div>
             </div>
@@ -179,10 +241,10 @@ const EditProfile = () => {
                     <Form.Item
                       label={
                         <span className="text-[#222222] text-[18px] font-medium">
-                          First Name
+                          Name
                         </span>
                       }
-                      name="firstName"
+                      name="name"
                       className="flex-1"
                       rules={[
                         {
@@ -190,53 +252,21 @@ const EditProfile = () => {
                           message: "Please input your First Name!",
                         },
                       ]}
+                      initialValue={currentUser?.name}
                     >
                       <Input
-                        placeholder="First name"
+                        placeholder="Name"
                         className="p-4 bg-[#EBF6FE]
-               rounded w-full 
-               justify-start 
-               border-none
-               mt-[12px]
-               items-center 
-               gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
-                        type="text"
-                      />
-                    </Form.Item>
-                  </div>
-                  <div className="flex-1">
-                    {/* <label
-                  htmlFor=""
-                  className="text-[#222222] text-[18px] font-medium mb-[12px]"
-                >
-                  Last Name
-                </label> */}
-                    <Form.Item
-                      label={
-                        <span className="text-[#222222] text-[18px] font-medium">
-                          Last Name
-                        </span>
-                      }
-                      name="lastName"
-                      className="flex-1"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Last Name!",
-                        },
-                      ]}
-                    >
-                      <Input
-                        // onChange={(e) => setLastName(e.target.value)}
-                        placeholder="First name"
-                        className="p-4 bg-[#EBF6FE]
-               rounded w-full 
-               justify-start 
-               border-none
-               mt-[12px]
-               items-center 
-               gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
-                        type="text"
+                         rounded w-full 
+                         justify-start 
+                         border-none
+                         mt-[12px]
+                         items-center 
+                         gap-4 inline-flex
+                          outline-none
+                           focus:border-none
+                            focus:bg-[#EBF6FE]
+                             hover:bg-[#EBF6FE]"
                       />
                     </Form.Item>
                   </div>
@@ -256,6 +286,7 @@ const EditProfile = () => {
                         message: "Please input your Email!",
                       },
                     ]}
+                    initialValue={currentUser?.email}
                   >
                     <Input
                       placeholder="Email"
@@ -266,7 +297,6 @@ const EditProfile = () => {
                border-none
                items-center 
                gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
-                      type="text"
                     />
                   </Form.Item>
                 </div>
@@ -305,6 +335,7 @@ const EditProfile = () => {
                         message: "Please input your Date Of Birth!",
                       },
                     ]}
+                    initialValue={currentUser?.dateOfBirth}
                   >
                     <DatePicker
                       className="p-4 bg-[#EBF6FE]

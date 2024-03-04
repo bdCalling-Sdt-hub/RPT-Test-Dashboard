@@ -1,5 +1,5 @@
 import { Input } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { CiCalendarDate } from "react-icons/ci";
 import "react-phone-number-input/style.css";
@@ -7,14 +7,16 @@ import PhoneInput from "react-phone-number-input";
 import { useNavigate } from "react-router-dom";
 
 const ProfileInformation = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [address, setAddress] = useState("");
-  const [value, setValue] = useState("");
+  const [currentUser,setCurrentUser] = useState()
   const navigate = useNavigate();
-  console.log(value);
+  const baseUrl = import.meta.env.VITE_API_URL;
+  useEffect(()=>{
+    const storedUser = localStorage.getItem('user-update');
+    const user = JSON.parse(storedUser);
+    console.log(user);
+    setCurrentUser(user);
+  },[])
+  console.log(currentUser);
   return (
     <div>
       <div className="flex justify-between items-center ml-[24px] mt-[40px] mb-[63px]">
@@ -37,13 +39,13 @@ const ProfileInformation = () => {
         <div className="w-[33%] ml-[24px] flex flex-col justify-center items-center gap-[30px]">
           <img
             className="w-[242px] h-[242px] rounded-full"
-            src="https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg"
+            src={`${baseUrl}${currentUser?.image?.url}`}
             alt=""
           />
           <div className="flex flex-col justify-center items-center">
-            <p className="text-[20px] text-[#4E4E4E]">Admin</p>
+            <p className="text-[20px] text-[#4E4E4E]">{currentUser?.role.toUpperCase()}</p>
             <h1 className="text-[#222222] text-[30px] font-medium">
-              Bessie Cooper
+             {currentUser?.name.toUpperCase()}
             </h1>
           </div>
         </div>
@@ -56,11 +58,12 @@ const ProfileInformation = () => {
                   htmlFor=""
                   className="text-[#222222] text-[18px] font-medium"
                 >
-                  First Name
+                  Name
                 </label>
                 <Input
-                  onChange={(e) => setFirstName(e.target.value)}
+              
                   placeholder="First name"
+                  value={currentUser?.name}
                   className="p-4 bg-[#EBF6FE]
                rounded w-full 
                justify-start 
@@ -72,27 +75,7 @@ const ProfileInformation = () => {
                   readOnly
                 />
               </div>
-              <div className="flex-1">
-                <label
-                  htmlFor=""
-                  className="text-[#222222] text-[18px] font-medium mb-[12px]"
-                >
-                  Last Name
-                </label>
-                <Input
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="First name"
-                  className="p-4 bg-[#EBF6FE]
-               rounded w-full 
-               justify-start 
-               border-none
-               mt-[12px]
-               items-center 
-               gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
-                  type="text"
-                  readOnly
-                />
-              </div>
+              
             </div>
             <div className="flex-1">
               <label
@@ -102,8 +85,9 @@ const ProfileInformation = () => {
                 Email
               </label>
               <Input
-                onChange={(e) => setEmail(e.target.value)}
+          
                 placeholder="Email"
+                value={currentUser?.email}
                 className="p-4 bg-[#EBF6FE]
               mt-[12px]
                rounded w-full 
@@ -122,18 +106,19 @@ const ProfileInformation = () => {
               >
                 Phone Number
               </label>
-              <PhoneInput
-                placeholder="Enter phone number"
-                international
-                countryCallingCodeEditable={false}
-                style={{
-                    marginTop:"12px",
-                   
-                }}
-                defaultCountry="US"
-                value={value}
-                onChange={(e)=>console.log(e)}
-                
+              <Input
+            
+                placeholder="Email"
+                value={currentUser?.phoneNumber}
+                className="p-4 bg-[#EBF6FE]
+              mt-[12px]
+               rounded w-full 
+               justify-start 
+               border-none
+               items-center 
+               gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
+                type="text"
+                readOnly
               />
             </div>
             <div className="flex-1">
@@ -144,8 +129,9 @@ const ProfileInformation = () => {
                 Date Of Birth
               </label>
               <Input
-                onChange={(e) => setDateOfBirth(e.target.value)}
+                // onChange={(e) => setDateOfBirth(e.target.value)}
                 placeholder="Date Of Birth"
+                value={currentUser?.dateOfBirth}
                 className="p-4 bg-[#EBF6FE]
                 rounded w-full 
                 justify-start 

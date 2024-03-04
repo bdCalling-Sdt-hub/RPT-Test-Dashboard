@@ -3,30 +3,40 @@ import { Space, Table } from "antd";
 import { BsInfoCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { useGetAllUserQuery } from "../../../redux/features/AllUser/getAllUser";
+import { useState } from "react";
 
 
 const UserList = () => {
+  const {data:AllUser,isLoading,isError,isSuccess} = useGetAllUserQuery();
+  console.log(AllUser?.data?.attributes?.users);
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const users = AllUser?.data?.attributes?.users;
+    
   const columns = [
     {
         title: '#SI',
-        dataIndex: 'si',
-        key: 'si',
-        render: (text) => <a>{text}</a>,
-      },
+        dataIndex: '',
+        key: '',
+        render: (text, record, index) => index + 1,
+    },
+
+    
+    
     {
-      title: 'Full Name',
+      title: 'Name',
       dataIndex: 'name',
       key: 'name',
       render: (_, record) => (
         <div className='flex gap-2 items-center'>
-          <img className='w-[34px] h-[34px] rounded-full' src={record.img} alt="" />
+          <img className='w-[34px] h-[34px] rounded-full' src={`${baseUrl}${record.image?.url}`} alt="" />
           <p className='font-medium'>{record.name}</p>
         </div>
       ),
     },
     {
       title: 'Phone',
-      dataIndex: 'phone',
+      dataIndex: 'phoneNumber',
       key: 'phone',
     },
     {
@@ -34,10 +44,10 @@ const UserList = () => {
       dataIndex: 'email',
       key: 'email',
     },
-    {
-        title: 'Joining Date',
-        key: 'date',
-        dataIndex: 'date',
+      {
+        title: 'Role',
+        key: 'role',
+        dataIndex: 'role',
         
       },
     {
@@ -45,7 +55,7 @@ const UserList = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link to={`/dashboard/users/users-details/${record?.key}`} ><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></Link>
+          <Link to={`/dashboard/users/users-details/${record?.id}`} ><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></Link>
           <a><RxCross2 size={18} className='text-[red]'/></a>
         </Space>
       ),
@@ -116,7 +126,7 @@ const UserList = () => {
             </h1>
           </div>
           <div className='ml-[24px] mt-[24px]'>
-               <AllUserList data={data} columns={columns}/>
+               <AllUserList data={users} columns={columns}/>
             </div>
         </div>
     );

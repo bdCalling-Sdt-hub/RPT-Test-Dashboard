@@ -10,7 +10,7 @@ import { BiDollarCircle } from "react-icons/bi";
 import { IoBookOutline } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
 import { IoIosArrowForward } from "react-icons/io";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { BsDot } from "react-icons/bs";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { MdMenu } from "react-icons/md";
@@ -18,6 +18,13 @@ import { HiMiniCurrencyDollar } from "react-icons/hi2";
 import { PiCrownSimpleLight } from "react-icons/pi";
 import Header from "../components/Header/Header";
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const handleLogOut = () =>{
+    localStorage.removeItem('token')
+    localStorage.removeItem('login-user')
+    localStorage.removeItem('user-update')
+    navigate('/')
+  }
   return (
     <div className="flex bg-[#EBF6FE] p-[32px] min-h-screen">
       <div className="w-[326px] flex flex-col justify-between bg-[#FFFFFF] min-h-screen rounded-lg border-2">
@@ -166,10 +173,13 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="mb-[32px]">
-          <Link to="/" className="flex items-center ml-[18px] cursor-pointer gap-2 text-[#3BA6F6] font-medium">
-            <HiLogout size={25} />
+          <div onClick={handleLogOut}  className="flex items-center ml-[18px] cursor-pointer gap-2 text-[#3BA6F6] font-medium">
+          <HiLogout size={25} />
             <span className="text-[20px] ">Log Out</span>
-          </Link>
+          </div>
+          {/* <Link to="/" className="flex items-center ml-[18px] cursor-pointer gap-2 text-[#3BA6F6] font-medium">
+            
+          </Link> */}
         </div>
       </div>
       <div className="flex-1">

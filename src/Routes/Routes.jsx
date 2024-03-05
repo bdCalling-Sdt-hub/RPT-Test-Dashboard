@@ -57,7 +57,7 @@ export const router = createBrowserRouter([
               element:<VerifyEmailForPassword/>
             },
             {
-              path:'/set_new_password',
+              path:'/set_new_password/:email',
               element:<SetNewPassword/>
             }
         ]

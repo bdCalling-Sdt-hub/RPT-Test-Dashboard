@@ -1,4 +1,4 @@
-import { Input, Modal, Switch } from "antd";
+import { Button, Form, Input, Modal, Switch } from "antd";
 import logo from "../../../assets/signup/rtp_labs_logo.png";
 import {
   IconChevronLeft,
@@ -6,30 +6,30 @@ import {
   IconLock,
   IconMail,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
 import { GoArrowLeft } from "react-icons/go";
+import baseURL from "../../../config";
+import Swal from "sweetalert2";
+import { HiOutlineMailOpen } from "react-icons/hi";
 const Setting = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modelTitle, setModelTitle] = useState("");
   const [otp, setOtp] = useState("");
-  const [changeAuth, setChangeAuth] = useState("");
-  const [emails, setEmail] = useState("");
-  const [resetAuth, setResetAuth] = useState("");
+  const [email, setEmail] = useState("");
+  const [form] = Form.useForm();
   const onChange = (checked) => {
     console.log(`switch to ${checked}`);
   };
-
-  const handleChange = (e) => {
-    setChangeAuth((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleReset = (e) => {
-    setResetAuth((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user-update"));
+    console.log(user);
+    setEmail(user.email);
+  }, []);
+  console.log(email);
 
   const handleNavigate = (value) => {
     if (value === "notification") {
@@ -65,92 +65,127 @@ const Setting = () => {
     },
   ];
 
-  const handleChangePassword = (e) => {
-    e.preventDefault();
-    const value = {
-      current_password: changeAuth.current_password,
-      new_password: changeAuth.new_password,
-      confirm_password: changeAuth.confirm_password,
+  const handleChangePassword = async (values) => {
+    console.log(values);
+    const data = {
+      oldPassword: values?.oldPassword,
+      newPassword: values?.newPassword,
     };
-    console.log(value);
-    // dispatch(updatePassword(value)).then(response => {
-    //   if(response.payload.message){
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "success",
-    //       title: response.payload.message,
-    //       showConfirmButton: false,
-    //       timer: 1500
-    //     }).then(()=>{
-    //       setIsModalOpen(false)
-    //     })
-    //   }
-    // })
-    // .catch(error => {
-    //   console.log(error)
-    // });
+    try {
+      const response = await baseURL.post(`/auth/change-password`, data);
+
+      console.log(response.data);
+      if (response.data.code == 200) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(`/dashboard/settings`);
+      }
+    } catch (error) {
+      console.log("Registration Fail", error?.response?.data?.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error...",
+        text: error?.response?.data?.message,
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+    }
   };
-  console.log(emails);
-  const handleForgetPassword = (e) => {
-    e.preventDefault();
-    // if(emails){
-    //   dispatch(forgetPassword({email: emails})).then(response => {
-    //       Swal.fire({
-    //         position: "center",
-    //         icon: "success",
-    //         title: response.payload,
-    //         showConfirmButton: false,
-    //         timer: 1500
-    //       }).then(()=>{
-    //         setModelTitle("Verify OTP")
-    //       })
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     });
-    // }
+
+  const handleForgetPassword = async (values) => {
+    console.log(values);
+    try {
+      const response = await baseURL.post(`/auth/forgot-password`, values);
+      if (response.data.code == 200) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setModelTitle("Verify OTP");
+      }
+    } catch (error) {
+      console.log("Registration Fail", error?.response?.data?.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error...",
+        text: error?.response?.data?.message,
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+    }
   };
   console.log(otp);
-  const handleVerifyOtp = (e) => {
+
+  const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    // dispatch(verifiedOtpReset(otp)).then(response => {
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "success",
-    //       title: response.payload,
-    //       showConfirmButton: false,
-    //       timer: 1500
-    //     }).then(()=>{
-    //       setModelTitle("Reset Password")
-    //     })
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   });
+    try {
+      const response = await baseURL.post(`/auth/verify-email`, {
+        email: email,
+        oneTimeCode: otp,
+      });
+
+      console.log(response.data);
+      const token = response?.data?.data?.attributes.tokens?.access.token;
+      console.log(token);
+      if (response.data.code == 200) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", response?.data?.data?.attributes?.user);
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        // navigate(`/set_new_password/${email}`);
+        setModelTitle("Reset Password");
+      }
+    } catch (error) {
+      console.log("Registration Fail", error?.response?.data?.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error...",
+        text: error?.response?.data?.message,
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+    }
   };
 
-  const handleResetPassword = (e) => {
-    e.preventDefault();
-    // const value = {
-    //   email : resetEmail as string,
-    //   password: resetAuth.password as string,
-    //   password_confirmation: resetAuth.confirmation_password as string
+  const handleResetPassword = async (values) => {
+    // e.preventDefault();
+    console.log(values);
 
-    // }
-    // dispatch(resetPassword(value)).then(response => {
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "success",
-    //       title: response.payload,
-    //       showConfirmButton: false,
-    //       timer: 1500
-    //     }).then(()=>{
-    //       setIsModalOpen(false)
-    //     })
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   });
+    const data = { email: email, password: values?.password };
+    console.log(data);
+    try {
+      const response = await baseURL.post(`/auth/reset-password`, data);
+
+      console.log(response.data);
+      if (response.data.code == 200) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.log("Registration Fail", error?.response?.data?.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error...",
+        text: error?.response?.data?.message,
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+    }
   };
 
   return (
@@ -175,6 +210,7 @@ const Setting = () => {
           </h2>
         </div>
       ))}
+
       {/* <div className="flex justify-between rounded-lg items-center px-[24px] py-[16px] bg-[white]">
         <p className="text-[18px] text-[#222222] font-medium">Notification</p>
         <Switch defaultChecked onChange={onChange} />
@@ -222,7 +258,6 @@ const Setting = () => {
                   {modelTitle}
                 </h1>
               </div>
-              
             </div>
           </div>
         }
@@ -254,190 +289,333 @@ const Setting = () => {
         {modelTitle === "Change password" && (
           <div className="">
             <p className="text-[18px] mb-[24px] text-[#4E4E4E] ">
-                Your password must be 8-10 character long.{" "}
-              </p>
-            <form className="w-full" onSubmit={handleChangePassword}>
-              <Input.Password
-                size="large"
-                onChange={handleChange}
-                placeholder="Enter your password"
-                name="current_password"
-                prefix={<IconLock className="mr-2 bg-white rounded-full p-[6px]" size={28} color="#0071E3" />}
-                style={{
-                  borderBottom: "2px solid #4E4E4E",
-                  height: "52px",
-                  background:'#C2E3FC',
-                  outline: "none",
-                  marginBottom: "20px",
-                }}
-                bordered={false}
-              />
-              <Input.Password
-                size="large"
-                name="new_password"
-                onChange={handleChange}
-                placeholder="Enter your password"
-                prefix={<IconLock  className="mr-2 bg-white rounded-full p-[6px]" size={28} color="#0071E3" />}
-                style={{
+              Your password must be 8-10 character long.{" "}
+            </p>
+            <Form
+              form={form}
+              name="dependencies"
+              autoComplete="off"
+              style={{
+                maxWidth: 600,
+              }}
+              layout="vertical"
+              className="space-y-4 fit-content object-contain"
+              onFinish={handleChangePassword}
+            >
+              <Form.Item
+                name="oldPassword"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Input Your Password!",
+                  },
+                ]}
+              >
+                <Input.Password
+                  size="large"
+                  // onChange={handleChange}
+                  placeholder="Enter Your old Password"
+                  name="oldPassword"
+                  prefix={
+                    <IconLock
+                      className="mr-2 bg-white rounded-full p-[6px]"
+                      size={28}
+                      color="#0071E3"
+                    />
+                  }
+                  style={{
                     borderBottom: "2px solid #4E4E4E",
                     height: "52px",
-                    background:'#C2E3FC',
+                    background: "#C2E3FC",
                     outline: "none",
                     marginBottom: "20px",
-                }}
-                bordered={false}
-              />
+                  }}
+                  bordered={false}
+                />
+              </Form.Item>
 
-              <Input.Password
-                size="large"
-                name="confirm_password"
-                onChange={handleChange}
-                placeholder="Enter your password"
-                prefix={<IconLock  className="mr-2 bg-white rounded-full p-[6px]" size={28} color="#0071E3" />}
-                style={{
+              <Form.Item
+                name="newPassword"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input.Password
+                  size="large"
+                  // onChange={handleChange}
+                  placeholder="Set Your New Password"
+                  name="newPassword"
+                  prefix={
+                    <IconLock
+                      className="mr-2 bg-white rounded-full p-[6px]"
+                      size={28}
+                      color="#0071E3"
+                    />
+                  }
+                  style={{
                     borderBottom: "2px solid #4E4E4E",
                     height: "52px",
-                    background:'#C2E3FC',
+                    background: "#C2E3FC",
                     outline: "none",
                     marginBottom: "20px",
-                }}
-                bordered={false}
-              />
+                  }}
+                  bordered={false}
+                />
+              </Form.Item>
+
+              {/* Field */}
+              <Form.Item
+                name="reenterPassword"
+                dependencies={["newPassword"]}
+                rules={[
+                  {
+                    required: true,
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("newPassword") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(
+                          "The new password that you entered do not match!"
+                        )
+                      );
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password
+                  size="large"
+                  placeholder="Re-enter password"
+                  name="re_enter_password"
+                  prefix={
+                    <IconLock
+                      className="mr-2 bg-white rounded-full p-[6px]"
+                      size={28}
+                      color="#0071E3"
+                    />
+                  }
+                  style={{
+                    borderBottom: "2px solid #4E4E4E",
+                    height: "52px",
+                    background: "#C2E3FC",
+                    outline: "none",
+                    marginBottom: "20px",
+                  }}
+                  bordered={false}
+                />
+              </Form.Item>
               <p className=" text-[#3BA6F6] font-medium">
                 <button onClick={() => setModelTitle("Forget password")}>
                   Forget Password
                 </button>
               </p>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
+                >
+                  Update password
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        )}
+
+        {modelTitle === "Forget password" && (
+          <div>
+            <Form
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={handleForgetPassword}
+              className="space-y-7 fit-content object-contain"
+            >
+              <div className="">
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Email!",
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    placeholder="Enter your email"
+                    name="email"
+                    prefix={
+                      <HiOutlineMailOpen
+                        className="mr-2 bg-white rounded-full p-[6px]"
+                        size={28}
+                        color="#0071E3"
+                      />
+                    }
+                    style={{
+                      borderBottom: "2px solid #4E4E4E",
+                      height: "52px",
+                      background: "#C2E3FC",
+                      outline: "none",
+                      marginBottom: "20px",
+                    }}
+                    bordered={false}
+                  />
+                </Form.Item>
+              </div>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
+                >
+                  Send OTP
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        )}
+
+        {modelTitle === "Verify OTP" && (
+          <div className="">
+            <form onSubmit={handleVerifyOtp}>
+              <p className="text-[16px] mb-[14px] text-[#4E4E4E]">
+                Please enter your email address to recover your account.
+              </p>
+              <div className="">
+                <OTPInput
+                  value={otp}
+                  onChange={setOtp}
+                  numInputs={6}
+                  inputStyle={{
+                    height: "44px",
+                    background: "transparent",
+                    width: "65px",
+                    fontSize: "20px",
+                    borderBottom: "1px solid #4E4E4E",
+                    marginRight: "20px",
+                    outline: "none",
+                  }}
+                  renderInput={(props) => <input {...props} />}
+                />
+                <p className="flex items-center justify-between mt-2 mb-6">
+                  Didn’t receive code?
+                  <button className="font-medium text-[#3BA6F6]">Resend</button>
+                </p>
+              </div>
 
               <button
                 type="submit"
                 className="bg-[#3BA6F6]
-                  text-white mt-5 py-3 rounded-lg w-full font-medium text-lg border  duration-200"
+            w-full
+            text-white mt-5 py-3 rounded-lg duration-200"
               >
-                Change password
+                Verify
               </button>
             </form>
           </div>
         )}
 
-        {modelTitle === "Forget password" && (
-            <div>
-          <form onSubmit={handleForgetPassword}>
-            <p className="text-[16px] mb-[14px] text-[#4E4E4E]">
-              Please enter your email address to recover your account.
-            </p>
-            <Input
-              size="large"
-              placeholder="Enter your Email"
-              onChange={(e) => setEmail(e.target.value)}
-              prefix={<IconMail  className="mr-2 bg-white rounded-full p-[6px]" size={28} color="#0071E3"  />}
-              style={{
-                borderBottom: "2px solid #4E4E4E",
-                height: "52px",
-                background:'#C2E3FC',
-                outline: "none",
-                marginBottom: "20px",
-              }}
-              bordered={false}
-            />
-
-            <button
-              onClick={() => setModelTitle("Verify OTP")}
-              type="submit"
-              className="bg-[#3BA6F6]
-            text-white mt-5 py-3 rounded-lg w-full  duration-200"
-            >
-              Send OTP
-            </button>
-          </form>
-          </div>
-        )}
-
-        {modelTitle === "Verify OTP" && (
-            <div className="">
-          <form onSubmit={handleVerifyOtp}>
-            <p className="text-[16px] mb-[14px] text-[#4E4E4E]">
-              Please enter your email address to recover your account.
-            </p>
-            <div className="">
-            <OTPInput
-              value={otp}
-              onChange={setOtp}
-              numInputs={6}
-              inputStyle={{
-                height:'44px',
-                background:'transparent',
-                width:'65px',
-                fontSize:"20px",
-                borderBottom: '1px solid #4E4E4E',
-                marginRight:'20px',
-                outline:'none'
-              }}
-              renderInput={(props) => <input {...props} />}
-            />
-            <p className="flex items-center justify-between mt-2 mb-6">
-              Didn’t receive code?
-              <button className="font-medium text-[#3BA6F6]">Resend</button>
-            </p>
-            </div>
-           
-
-            <button
-              type="submit"
-              className="bg-[#3BA6F6]
-            w-full
-            text-white mt-5 py-3 rounded-lg duration-200"
-            >
-              Verify
-            </button>
-          </form>
-          </div>
-        )}
-
         {modelTitle === "Reset Password" && (
-          <form className="w-full" onSubmit={handleResetPassword}>
-            <p className="text-[16px] mb-[14px] text-[#4E4E4E]">
-              Set a new password and it should be 8-10 characters long.
-            </p>
-            <Input.Password
-              size="large"
-              placeholder="Enter your password"
-              name="password"
-              onChange={handleReset}
-              prefix={<IconLock className="mr-2 bg-white rounded-full p-[6px]" size={28} color="#0071E3" />}
-              style={{
-                borderBottom: "2px solid #4E4E4E",
-                height: "52px",
-                background:'#C2E3FC',
-                outline: "none",
-                marginBottom: "20px",
-              }}
-              bordered={false}
-            />
-            <Input.Password
-              size="large"
-              name="confirmation_password"
-              onChange={handleReset}
-              placeholder="Re-Enter your password"
-              prefix={<IconLock  className="mr-2 bg-white rounded-full p-[6px]" size={28} color="#0071E3" />}
-              style={{
-                borderBottom: "2px solid #4E4E4E",
-                height: "52px",
-                background:'#C2E3FC',
-                outline: "none",
-                marginBottom: "20px",
-              }}
-              bordered={false}
-            />
-
-            <button
-              type="submit"
-              className="bg-[#3BA6F6]
-            text-white mt-5 py-3 rounded-lg text-[16px] font-medium w-full duration-200"
+          <Form
+            form={form}
+            name="dependencies"
+            autoComplete="off"
+            style={{
+              maxWidth: 600,
+            }}
+            layout="vertical"
+            className="space-y-4 fit-content object-contain"
+            onFinish={handleResetPassword}
+          >
+            <Form.Item
+              name="enter_password"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
             >
-              Update password
-            </button>
-          </form>
+              <Input.Password
+                size="large"
+                // onChange={handleChange}
+                placeholder="Set your password"
+                name="set_password"
+                prefix={
+                  <IconLock
+                    className="mr-2 bg-white rounded-full p-[6px]"
+                    size={28}
+                    color="#0071E3"
+                  />
+                }
+                style={{
+                  borderBottom: "2px solid #4E4E4E",
+                  height: "52px",
+                  background: "#C2E3FC",
+                  outline: "none",
+                  marginBottom: "20px",
+                }}
+                bordered={false}
+              />
+            </Form.Item>
+
+            {/* Field */}
+            <Form.Item
+              name="password"
+              dependencies={["password"]}
+              rules={[
+                {
+                  required: true,
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("enter_password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error(
+                        "The new password that you entered do not match!"
+                      )
+                    );
+                  },
+                }),
+              ]}
+            >
+              <Input.Password
+                size="large"
+                placeholder="Re-enter password"
+                name="re_enter_password"
+                prefix={
+                  <IconLock
+                    className="mr-2 bg-white rounded-full p-[6px]"
+                    size={28}
+                    color="#0071E3"
+                  />
+                }
+                style={{
+                  borderBottom: "2px solid #4E4E4E",
+                  height: "52px",
+                  background: "#C2E3FC",
+                  outline: "none",
+                  marginBottom: "20px",
+                }}
+                bordered={false}
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
+              >
+                Update password
+              </Button>
+            </Form.Item>
+          </Form>
         )}
       </Modal>
     </div>

@@ -45,7 +45,7 @@ const VerifyEmailForPassword = () => {
                   showConfirmButton: false,
                   timer: 1500
               });
-              navigate(`/set_new_password`);
+              navigate(`/set_new_password/${email}`);
           }
       }catch(error){
           console.log("Registration Fail",error?.response?.data?.message);
@@ -68,7 +68,7 @@ const VerifyEmailForPassword = () => {
                 <GoArrowLeft className="text-[24px]" />
               </Link>
   
-              <h1 className="text-[24px] my-[24px] font-medium">Verify Email</h1>
+              <h1 className="text-[24px] my-[24px] font-medium">Verify Email For Reset Password</h1>
             </div>
             <p className="text-[16px] mb-[24px] text-[#4E4E4E] font-medium">
               Please enter the OTP we have sent you in your email.{" "}

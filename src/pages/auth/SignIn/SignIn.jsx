@@ -8,29 +8,74 @@ import { useGetUserQuery } from "../../../redux/features/authentication/loginApi
 import Loading from "../../../components/Loading/Loading";
 import { login } from "../../../redux/apiSlices/authentication/loginSlice";
 import Swal from "sweetalert2";
+import baseURL from "../../../config";
 
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {isSuccess,user} = useSelector((state)=>state.login)
-  const onFinish = ({email,password,remember}) => {
-    console.log("Received values of form: ", email,password);
-    dispatch(login({email,password}))
-    .then(response => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Login Successfully",
-        showConfirmButton: false,
-        timer: 1500
-      }).then(() => {
-        navigate("/dashboard")
-      });
-    })
-    .catch(error => {
-      console.log(error)
+  const onFinish = async ({email,password,remember}) => {
+    // console.log("Received values of form: ", email,password);
+
+    try{
+      const response = await baseURL.post(`/auth/login`,{email,password},{
+        headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
     });
+      console.log(response?.data)
+      if(response.data.code==200){
+        localStorage.setItem('token', response?.data?.data?.attributes?.tokens?.access?.token);
+        localStorage.setItem('login-user',JSON.stringify(response?.data?.data?.attributes))
+        localStorage.setItem('user-update',JSON.stringify(response?.data?.data?.attributes?.user))
+          Swal.fire({
+              position: 'top-center',
+              icon: 'success',
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500
+          });
+           navigate("/dashboard")
+      }
+  }catch(error){
+      console.log("Registration Fail",error?.response?.data?.message);
+      Swal.fire({
+          icon: "error",
+          title: "Error...",
+          text: error?.response?.data?.message,
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+  }
+
+
+
+
+
+    // dispatch(login({email,password}))
+    // .then(response => {
+    //   console.log(response);
+    //   Swal.fire({
+    //     position: "center",
+    //     icon: "success",
+    //     title: "Login Successfully",
+    //     showConfirmButton: false,
+    //     timer: 1500
+    //   }).then(() => {
+    //     navigate("/dashboard")
+    //   });
+    // })
+    // .catch(error => {
+
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Error...",
+    //     text: error?.response?.data?.message,
+    //     footer: '<a href="#">Why do I have this issue?</a>'
+    //   });
+    //   console.log(error)
+    // });
   
 
   };

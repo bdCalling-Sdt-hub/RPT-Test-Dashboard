@@ -67,7 +67,7 @@ const MembershipCart = ({ membership }) => {
     }
   };
   return (
-    <div className="w-[] bg-white rounded-lg ml-[24px]">
+    <div className=" bg-white rounded-lg ml-[24px] text-wrap relative">
       <h1 className="py-[30px] text-[30px] font-semibold text-center">
         {title}
       </h1>
@@ -77,7 +77,7 @@ const MembershipCart = ({ membership }) => {
             ${price}
           </h1>
           <p className="text-[18px] text-white text-center">
-            *Renews Every Dec 1st At $279.99
+            *Renews Every Dec 1st At ${price}
           </p>
         </div>
         <div className="mt-[32px] pb-[26px] border-b-2 border-b-[#3BA6F6]">
@@ -90,16 +90,16 @@ const MembershipCart = ({ membership }) => {
             <span className="font-medium">${PerBreathAlcoholTestPrice}</span>
           </h1>
         </div>
-        <div className="mt-[34px] ml-[30px]">
+        <div className="mt-[34px] mx-[10px] text-wrap">
           {features?.map((feature, index) => (
-            <div key={index} className="flex gap-[16px] items-start my-[16px]">
-              <FaCircleCheck className="text-[#3BA6F6]" size={24} />
-              <p>{feature}</p>
+            <div key={index} className="my-[16px] text-wrap flex gap-2">
+              <FaCircleCheck className="text-[#3BA6F6]" size={20} />  <span className="flex-1">{feature}</span>
+             
             </div>
           ))}
         </div>
       </div>
-      <div className="py-[30px]">
+      <div className="py-[30px] px-4">
         <div className="flex gap-5 justify-center">
           <Link
             to={`edit-membership/${_id}`}

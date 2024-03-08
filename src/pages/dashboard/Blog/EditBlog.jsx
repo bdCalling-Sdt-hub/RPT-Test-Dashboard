@@ -20,24 +20,30 @@ const EditBlog = () => {
   const [blogName, setBlogName] = useState("");
   const [blogCoverImg, setBlogCoverImg] = useState("");
   const navigate = useNavigate();
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(data?.data?.attributes?.content);
   const editor = useRef(null);
   const baseUrl = import.meta.env.VITE_API_URL;
   const singleBlog = data?.data?.attributes;
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: `${baseUrl}${singleBlog?.image?.url}`,
-    },
-  ]
-  );
+  const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    if (singleBlog?.image?.url) {
+      setFileList([
+        {
+          uid: "-1",
+          name: "image.png",
+          status: "done",
+          url: `${baseUrl}${singleBlog?.image?.url}`,
+        },
+      ]);
+    }
+  }, [singleBlog]);
   useEffect(() => {
     // Fetch data from API
         setContent(singleBlog?.content);
   
-  }, []);
+  }, [data]);
+  console.log(content);
 console.log(singleBlog?.content);
   if (isLoading) {
     return <Loading />;
@@ -220,7 +226,7 @@ console.log(singleBlog?.content);
                   message: "Please input your First Name!",
                 },
                 {
-                  max: 100,
+                  max: 400,
                   message: "Description must be at most 100 characters.",
                 },
               ]}
@@ -255,8 +261,8 @@ console.log(singleBlog?.content);
               className="flex-1"
               rules={[
                 {
-                  required: true,
-                  message: "Please input your First Name!",
+                  required: false,
+                  message: "Please input your Image!",
                 },
               ]}
               // valuePropName="fileList" // Set the valuePropName to "fileList" for Upload component

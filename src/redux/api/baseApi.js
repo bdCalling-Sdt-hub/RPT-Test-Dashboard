@@ -10,7 +10,7 @@ export const baseApi = createApi({
             authorization: `Bearer ${localStorage.getItem("token")}`,
         }
     }),
-    tagTypes:["membership"],
+    tagTypes:["membership","notification"],
     endpoints:()=>({
         // getUser:builder.query({
         //     query:()=>'/users'

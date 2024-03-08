@@ -1,7 +1,27 @@
 import { IoIosNotificationsOutline } from "react-icons/io";
+import NotificationCart from "../../../components/Notification/NotificationCart";
+import { useGetNotificationQuery } from "../../../redux/features/getNotificationApi";
+import Loading from "../../../components/Loading/Loading";
+import { Pagination } from "antd";
+import { useState } from "react";
 
 
 const Notification = () => {
+  const [page, setPage] = useState(1);
+  const {data,isError,isLoading,isSuccess,} = useGetNotificationQuery(page);
+  if(isLoading){
+    return <Loading/>
+  }
+  const notification = data?.data?.attributes?.notifications?.results;
+  console.log(notification);
+  const onChange = (values) => {
+    console.log(values);
+    setPage(values);
+  };
+  console.log(data);
+  const totalResults = data?.data?.attributes?.notifications?.totalResults;
+  console.log(totalResults);
+  
     return (
         <div>
       <div className="pl-[24px] ">
@@ -12,49 +32,16 @@ const Notification = () => {
             </h1>
           </div>
           <div className="flex flex-col">
-            <div className="flex bg-white gap-[16px] items-center p-[16px] my-[16px] rounded-lg">
-              {/* <div className="w-10 h-10 flex p-[7px] rounded bg-[#EEF6EA] "> */}
-              <IoIosNotificationsOutline
-                style={{ cursor: "pointer" }}
-                className={` bg-primary w-[52px] h-[52px] text-[#3BA6F6] border-2 border-[#3BA6F6] rounded-full p-2 `}
-              />
-              {/* </div> */}
-              
-                <h1 className="text-[16px] font-normal">
-                    Jane has booked an appointment for drug testing.
-                </h1>
-                <p className="text-[14px] text-[#979797]">Fri, 12:30pm</p>
-            
-            </div>
-            <div className="flex bg-white gap-[16px] items-center p-[16px] my-[16px] rounded-lg">
-              {/* <div className="w-10 h-10 flex p-[7px] rounded bg-[#EEF6EA] "> */}
-              <IoIosNotificationsOutline
-                style={{ cursor: "pointer" }}
-                className={` bg-primary w-[52px] h-[52px] text-[#3BA6F6] border-2 border-[#3BA6F6] rounded-full p-2 `}
-              />
-              {/* </div> */}
-              
-                <h1 className="text-[16px] font-normal">
-                    Jane has booked an appointment for drug testing.
-                </h1>
-                <p className="text-[14px] text-[#979797]">Fri, 12:30pm</p>
-            
-            </div>
-            <div className="flex bg-white gap-[16px] items-center p-[16px] my-[16px] rounded-lg">
-              {/* <div className="w-10 h-10 flex p-[7px] rounded bg-[#EEF6EA] "> */}
-              <IoIosNotificationsOutline
-                style={{ cursor: "pointer" }}
-                className={` bg-primary w-[52px] h-[52px] text-[#3BA6F6] border-2 border-[#3BA6F6] rounded-full p-2 `}
-              />
-              {/* </div> */}
-              
-                <h1 className="text-[16px] font-normal">
-                    Jane has booked an appointment for drug testing.
-                </h1>
-                <p className="text-[14px] text-[#979797]">Fri, 12:30pm</p>
-            
-            </div>
+    
+            {
+              notification?.map((item,index)=> <NotificationCart key={item?._id} item={item}/>)
+            }
+         
           </div>
+          <div className="flex justify-center my-10">
+        <Pagination onChange={onChange} defaultCurrent={1} total={totalResults} />
+        
+      </div>
         </div>
       </div>
     </div>

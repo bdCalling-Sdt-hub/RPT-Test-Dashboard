@@ -212,6 +212,7 @@ const Appointments = () => {
       if(isSuccess){
         console.log(allAppointment?.data?.attributes?.results);
       }
+      console.log(allAppointment?.data?.attributes?.results);
     return (
         <div>
            <div className="ml-[24px] mt-[44px]">

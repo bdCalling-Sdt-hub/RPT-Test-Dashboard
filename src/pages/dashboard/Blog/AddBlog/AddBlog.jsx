@@ -227,7 +227,7 @@ const AddBlog = () => {
                   message: "Please input your First Name!",
                 },
                 {
-                  max: 100,
+                  max: 400,
                   message: "Description must be at most 100 characters.",
                 },
               ]}

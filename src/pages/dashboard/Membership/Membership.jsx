@@ -25,11 +25,12 @@ const Membership = () => {
 
   const totalMembershipCart = allMembership?.data?.attributes?.totalResults;
   const memberships = allMembership?.data?.attributes?.results
-
+  console.log(memberships);
   return (
     <div>
       <div className="flex justify-end">
-        <div
+        {
+          memberships.length<2 && <div
           onClick={(e) => navigate("/dashboard/membership/addmembership")}
           className="flex gap-2 items-center py-[15px]
                  px-[40px]
@@ -42,10 +43,12 @@ const Membership = () => {
           <FaPlus size={17} />
           <p>Add Membership</p>
         </div>
+        }
+        
       </div>
       <div className="grid lg:grid-cols-2 gap-5 mt-5 mr-5">
         {
-          memberships.map((membership,index)=> <MembershipCart key={membership._id} membership={membership} />)
+          memberships?.map((membership,index)=> <MembershipCart key={membership._id} membership={membership} />)
         }
        
       </div>

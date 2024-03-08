@@ -9,6 +9,9 @@ import { LuImagePlus } from "react-icons/lu";
 import styles from "./EditProfile.module.css";
 import baseURL from "../../../config";
 import Swal from "sweetalert2";
+import { useGetAllUserQuery } from "../../../redux/features/AllUser/getAllUser";
+import { useGetUserQuery } from "../../../redux/features/AllUser/getSingleUser";
+import Loading from "../../../components/Loading/Loading";
 
 // const getBase64 = (img, callback) => {
 //   const reader = new FileReader();
@@ -30,30 +33,28 @@ import Swal from "sweetalert2";
 const EditProfile = () => {
   // State to store the image URL
   const [currentUser, setCurrentUser] = useState();
-  const [phoneNumber, setPhoneNumber] = useState(currentUser?.phoneNumber);
-  const [imageUrl, setImageUrl] = useState( );
-  const baseUrl = import.meta.env.VITE_API_URL;
-  const [fileList, setFileList] = useState([
-    // {
-    //   uid: "-1",
-    //   name: "image.png",
-    //   status: "done",
-    //   url: `${baseUrl}${singleBlog?.image?.url}`,
-    // },
-  ]
-  );
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user-update");
-    const user = JSON.parse(storedUser);
-    console.log(user);
-    setCurrentUser(user);
-    setPhoneNumber(user?.phoneNumber);
-    setImageUrl(`${baseUrl}${user?.image?.url}`);
-  }, []);
- 
-  const navigate = useNavigate();
+  const { data, isLoading } = useGetUserQuery(currentUser?.id);
 
-console.log(imageUrl);
+  const [phoneNumber, setPhoneNumber] = useState(currentUser?.phoneNumber);
+  const [imageUrl, setImageUrl] = useState();
+  const navigate = useNavigate();
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const [fileList, setFileList] = useState([]);
+
+useEffect(()=>{
+  const storedUser = localStorage.getItem("user-update");
+  const user = JSON.parse(storedUser);
+  setCurrentUser(user);
+
+},[])
+  useEffect(() => {
+    setPhoneNumber(currentUser?.phoneNumber);
+    setImageUrl(`${baseUrl}${currentUser?.image?.url}`);
+  }, [data]);
+ if(isLoading){
+  return <Loading/>
+ }
+
   const props = {
     action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
     listType: "picture",
@@ -136,7 +137,7 @@ console.log(imageUrl);
     console.log(updateProfile);
   };
 console.log(fileList[0]?.originFileObj);
-  console.log(currentUser?.email);
+  console.log(currentUser);
   console.log(currentUser?.name);
   return (
     <div>
@@ -154,9 +155,7 @@ console.log(fileList[0]?.originFileObj);
           wrapperCol={{ span: 40 }}
           layout="vertical"
           initialValues={{
-            name: currentUser?.name,
-            email: currentUser?.email,
-            dateOfBirth: currentUser?.dateOfBirth, // Make sure to use moment for DatePicker
+            remember: true,
           }}
           autoComplete="off"
           
@@ -252,7 +251,7 @@ console.log(fileList[0]?.originFileObj);
                           message: "Please input your First Name!",
                         },
                       ]}
-                      initialValue={currentUser?.name}
+                      initialValue={data?.name}
                     >
                       <Input
                         placeholder="Name"
@@ -286,7 +285,7 @@ console.log(fileList[0]?.originFileObj);
                         message: "Please input your Email!",
                       },
                     ]}
-                    initialValue={currentUser?.email}
+                    initialValue={data?.email}
                   >
                     <Input
                       placeholder="Email"
@@ -335,7 +334,7 @@ console.log(fileList[0]?.originFileObj);
                         message: "Please input your Date Of Birth!",
                       },
                     ]}
-                    initialValue={currentUser?.dateOfBirth}
+                    initialValue={data?.dateOfBirth}
                   >
                     <DatePicker
                       className="p-4 bg-[#EBF6FE]

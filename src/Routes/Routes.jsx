@@ -76,11 +76,11 @@ export const router = createBrowserRouter([
                 element:<Notification/>
               },
               {
-                path:'profileinformation',
+                path:'profile-information',
                 element:<ProfileInformation/>
               },
               {
-                path:'editprofile',
+                path:'edit-profile/:id',
                 element:<EditProfile/>
               },
               {

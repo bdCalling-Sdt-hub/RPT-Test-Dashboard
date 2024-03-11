@@ -59,10 +59,10 @@ const Setting = () => {
       title: "Change password",
       path: "change-password",
     },
-    {
-      title: "About us",
-      path: "about-us",
-    },
+    // {
+    //   title: "About us",
+    //   path: "about-us",
+    // },
   ];
 
   const handleChangePassword = async (values) => {

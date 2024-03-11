@@ -22,7 +22,7 @@ const ProfileInformation = () => {
       <div className="flex justify-between items-center ml-[24px] mt-[40px] mb-[63px]">
         <h1 className="text-[30px] font-medium">Profile Information</h1>
         <div
-            onClick={(e) =>navigate("/dashboard/editprofile")}
+            onClick={(e) =>navigate(`/dashboard/edit-profile/${currentUser?.id}`)}
           className="flex gap-2 items-center py-[15px]
                  px-[40px]
                   bg-[#3BA6F6]
@@ -108,7 +108,7 @@ const ProfileInformation = () => {
               </label>
               <Input
             
-                placeholder="Email"
+                placeholder="Phone Number"
                 value={currentUser?.phoneNumber}
                 className="p-4 bg-[#EBF6FE]
               mt-[12px]

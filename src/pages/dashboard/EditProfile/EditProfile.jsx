@@ -1,8 +1,9 @@
 import { Button, DatePicker, Form, Input, Upload, message } from "antd";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
 import { LuImagePlus } from "react-icons/lu";
@@ -32,29 +33,26 @@ import Loading from "../../../components/Loading/Loading";
 
 const EditProfile = () => {
   // State to store the image URL
-  const [currentUser, setCurrentUser] = useState();
-  const { data, isLoading } = useGetUserQuery(currentUser?.id);
-
-  const [phoneNumber, setPhoneNumber] = useState(currentUser?.phoneNumber);
-  const [imageUrl, setImageUrl] = useState();
   const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_URL;
+  const { id } = useParams();
+  const { data, isLoading } = useGetUserQuery(id);
+  const user = data?.data?.attributes?.user;
+  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber);
+  const [imageUrl, setImageUrl] = useState(`${baseUrl}${user?.image?.url}`);
   const [fileList, setFileList] = useState([]);
-
-useEffect(()=>{
-  const storedUser = localStorage.getItem("user-update");
-  const user = JSON.parse(storedUser);
-  setCurrentUser(user);
-
-},[])
-  useEffect(() => {
-    setPhoneNumber(currentUser?.phoneNumber);
-    setImageUrl(`${baseUrl}${currentUser?.image?.url}`);
-  }, [data]);
- if(isLoading){
-  return <Loading/>
- }
-
+  useEffect(()=>{
+    setImageUrl(`${baseUrl}${user?.image?.url}`)
+    setPhoneNumber(user?.phoneNumber)
+  },[data])
+  //   useEffect(() => {
+  //     setPhoneNumber(currentUser?.phoneNumber);
+  //     setImageUrl(`${baseUrl}${currentUser?.image?.url}`);
+  //   }, [data]);
+  if (isLoading) {
+    return <Loading />;
+  }
+  console.log(user);
   const props = {
     action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
     listType: "picture",
@@ -86,66 +84,62 @@ useEffect(()=>{
       });
     },
   };
-  const handleUpdateProfile = async(values) => {
+  const handleUpdateProfile = async (values) => {
     const updateProfile = {
       ...values,
-      image:fileList[0]?.originFileObj,
+      image: fileList[0]?.originFileObj,
       dateOfBirth: `${values.dateOfBirth.$D}-${values.dateOfBirth.$M + 1}-${
         values.dateOfBirth.$y
       }`,
       phoneNumber,
-    }
+    };
     const formData = new FormData();
     formData.append("name", updateProfile?.name);
     formData.append("email", updateProfile?.email);
     formData.append("phoneNumber", updateProfile?.phoneNumber);
     formData.append("dateOfBirth", updateProfile?.dateOfBirth);
     if (fileList[0]?.originFileObj) {
-      formData.append(
-        "image",
-        fileList[0]?.originFileObj
-      );
+      formData.append("image", fileList[0]?.originFileObj);
     }
-    try{
-      const response = await baseURL.patch(`/users/${currentUser?.id}`,formData);
-
-  
-      
-      if(response.data.code==200){
-          Swal.fire({
-              position: 'top-center',
-              icon: 'success',
-              title: response.data.message,
-              showConfirmButton: false,
-              timer: 1500
-          });
-          localStorage.removeItem("user-update")
-          localStorage.setItem("user-update",JSON.stringify(response?.data?.data?.attributes))
-          console.log(response.data)
-          // navigate('/dashboard/', { replace: true });
-          // window.location.reload();
-      }
-  }catch(error){
-      console.log("Registration Fail",error?.response?.data?.message);
-      Swal.fire({
-          icon: "error",
-          title: "Error...",
-          text: error?.response?.data?.message,
-          footer: '<a href="#">Why do I have this issue?</a>'
+    try {
+      const response = await baseURL.patch(`/users/${id}`, formData);
+      if (response.data.code == 200) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
         });
-  }
+        localStorage.removeItem("user-update");
+        localStorage.setItem(
+          "user-update",
+          JSON.stringify(response?.data?.data?.attributes)
+        );
+        console.log(response.data);
+        // navigate('/dashboard/', { replace: true });
+        setTimeout(()=>window.location.reload() , 1700);
+        
+      }
+    } catch (error) {
+      console.log("Registration Fail", error?.response?.data?.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error...",
+        text: error?.response?.data?.message,
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+    }
     console.log(updateProfile);
   };
-console.log(fileList[0]?.originFileObj);
-  console.log(currentUser);
-  console.log(currentUser?.name);
+
   return (
     <div>
-      <div  onClick={() => navigate("/dashboard/profileinformation")} className="flex cursor-pointer  items-center ml-[24px] mt-[40px] mb-[63px]">
-        <MdOutlineKeyboardArrowLeft
-         
-          size={30}
-        />
+      <div
+        onClick={() => navigate("/dashboard/profile-information")}
+        className="flex cursor-pointer  items-center ml-[24px] mt-[40px] mb-[63px]"
+      >
+        <MdOutlineKeyboardArrowLeft size={30} />
         <h1 className="text-[20px] font-medium"> Edit Profile</h1>
       </div>
       <div className="ml-[24px] bg-white p-[36px] rounded-xl">
@@ -158,7 +152,6 @@ console.log(fileList[0]?.originFileObj);
             remember: true,
           }}
           autoComplete="off"
-          
           onFinish={handleUpdateProfile}
           //   onFinishFailed={handleCompanyInformationFailed}
         >
@@ -175,7 +168,7 @@ console.log(fileList[0]?.originFileObj);
                   name="avatar"
                   listType="picture-circle"
                   className={styles.avatarUploader}
-                  fileList={fileList} 
+                  fileList={fileList}
                   // className={styles.ant-upload}
                   showUploadList={false}
                   action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
@@ -225,10 +218,10 @@ console.log(fileList[0]?.originFileObj);
               </div>
               <div className="flex flex-col justify-center items-center">
                 <p className="text-[20px] text-[#4E4E4E]">
-                  {currentUser?.role.toUpperCase()}
+                  {user?.role.toUpperCase()}
                 </p>
                 <h1 className="text-[#222222] text-[30px] font-medium">
-                  {currentUser?.name.toUpperCase()}
+                  {user?.name.toUpperCase()}
                 </h1>
               </div>
             </div>
@@ -251,7 +244,7 @@ console.log(fileList[0]?.originFileObj);
                           message: "Please input your First Name!",
                         },
                       ]}
-                      initialValue={data?.name}
+                      initialValue={user?.name}
                     >
                       <Input
                         placeholder="Name"
@@ -285,7 +278,7 @@ console.log(fileList[0]?.originFileObj);
                         message: "Please input your Email!",
                       },
                     ]}
-                    initialValue={data?.email}
+                    initialValue={user?.email}
                   >
                     <Input
                       placeholder="Email"
@@ -334,7 +327,9 @@ console.log(fileList[0]?.originFileObj);
                         message: "Please input your Date Of Birth!",
                       },
                     ]}
-                    initialValue={data?.dateOfBirth}
+                    initialValue={user?.dateOfBirth
+                      ? moment(user.dateOfBirth, "DD-M-YYYY")
+                      : null}
                   >
                     <DatePicker
                       className="p-4 bg-[#EBF6FE]
@@ -346,6 +341,11 @@ console.log(fileList[0]?.originFileObj);
                  gap-4 inline-flex outline-none focus:border-none focus:bg-[#EBF6FE] hover:bg-[#EBF6FE]"
                       type="date"
                       prefix={" "}
+                      // defaultValue={
+                      //   user?.dateOfBirth
+                      //     ? moment(user.dateOfBirth, "DD-M-YYYY")
+                      //     : null
+                      // }
                     />
                   </Form.Item>
                 </div>

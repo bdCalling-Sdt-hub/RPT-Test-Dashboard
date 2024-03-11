@@ -15,7 +15,7 @@ const PrivateRoute = ({children}) => {
     //     email : "ahad.aiman2@gmail.com"
     // }
     console.log(user);
-    if(user?.user?.isEmailVerified && user?.user?.role=="admin"){
+    if(user?.user?.isEmailVerified && user?.user?.role=="admin" || user?.user?.role=="employee"){
         return children;
     }
     return <Navigate to='/' state={{from:location}} />

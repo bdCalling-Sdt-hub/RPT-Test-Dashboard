@@ -2,135 +2,132 @@ import { Space, Table, Tag } from 'antd';
 import { BsInfoCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from 'react-router-dom';
-const columns = [
+import { useGetAppointmentQuery } from '../../redux/features/getAppointmentApi';
+
+ 
+
+const RecentAppointments = () => {
+  const {
+    data: allAppointment,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useGetAppointmentQuery();
+  const columns = [
     {
-        title: '#SI',
-        dataIndex: 'si',
-        key: 'si',
-        render: (text) => <a>{text}</a>,
-      },
+      title: "#SI",
+      dataIndex: "si",
+      key: "si",
+      render: (text, record, index) => index + 1,
+    },
     {
-      title: 'Full Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Full Name",
+      dataIndex: "name",
+      key: "name",
       render: (_, record) => (
-        <div className='flex gap-2 items-center'>
-          <img className='w-[34px] h-[34px] rounded-full' src={record.img} alt="" />
-          <p className='font-medium'>{record.name}</p>
+        <div className="items-center">
+          <p className="font-medium">
+            {record?.individualDOTInformation?.paymentInformation?.fullName}
+          </p>
         </div>
       ),
     },
     {
-      title: 'Phone',
-      dataIndex: 'phone',
-      key: 'phone',
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+      render: (_, record) => (
+        <div>
+          <p className="font-medium">
+            {record?.individualDOTInformation?.paymentInformation?.phoneNumber}
+          </p>
+        </div>
+      ),
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (_, record) => (
+        <div>
+          <p className="font-medium">
+            {record?.individualDOTInformation?.paymentInformation?.email}
+          </p>
+        </div>
+      ),
     },
     {
-      title: 'Type Of Test',
-      key: 'test',
-      dataIndex: 'test',
-      
+      title: "Type of Test",
+      dataIndex: "test",
+      key: "test",
+      render: (_, record) => (
+        <div>
+          <p className="font-medium">{record?.shoppingCart?.name}</p>
+        </div>
+      ),
+    },
+//     {
+//       title: "Type",
+//       dataIndex: "type",
+//       key: "type",
+//       render: (_, record) => (
+//         <div>
+//           <p className="font-medium">{record?.type
+// }</p>
+//         </div>
+//       ),
+//     },
+    {
+      title: "Date",
+      key: "date",
+      dataIndex: "date",
+      render: (_, record) => (
+        <div>
+          <p className="font-medium">{record?.createdAt.split("T")[0]}</p>
+        </div>
+      ),
     },
     {
-        title: 'Date',
-        key: 'date',
-        dataIndex: 'date',
-        
-      },
-      {
-        title: 'Amount',
-        key: 'amount',
-        dataIndex: 'amount',
-        
-      },
+      title: "Quantity",
+      key: "quantity",
+      dataIndex: "quantity",
+      render: (_, record) => (
+        <div>
+          <p className="font-medium">{record?.quantity}</p>
+        </div>
+      ),
+    },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Amount",
+      key: "amount",
+      dataIndex: "amount",
+      render: (_, record) => (
+        <div>
+          <p className="font-medium">${Math.ceil( record?.shoppingCart?.
+price * record?.quantity)}</p>
+        </div>
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Link to={`recent-appointments/appointment-details/${record?.key}`}><BsInfoCircle size={18} className='text-[#3BA6F6] ' /></Link>
-          <a><RxCross2 size={18} className='text-[red]'/></a>
+          <Link
+            to={`/dashboard/appointments/appointment-details/${record?._id}`}
+          >
+            <BsInfoCircle size={18} className="text-[#3BA6F6] " />
+          </Link>
+         
         </Space>
       ),
     },
   ];
-  const data = [
-    {
-      key: '1',
-      si:1,
-      name: 'John Brown',
-      img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      phone: 3254546454,
-      email:"ahad.aiman@gmail.com",
-      test:" Breath alcohol Testing ",
-      date:"02-24-2024",
-      amount:500,
-    },
-    {
-        key: '2',
-        si:2,
-        name: 'John Brown',
-        img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-        phone: 3254546454,
-        email:"ahad.aiman@gmail.com",
-        test:" Breath alcohol Testing ",
-        date:"02-24-2024",
-        amount:500,
-      },
-      {
-        key: '3',
-        si:3,
-        name: 'John Brown',
-        img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-        phone: 3254546454,
-        email:"ahad.aiman@gmail.com",
-        test:" Breath alcohol Testing ",
-        date:"02-24-2024",
-        amount:500,
-      },
-      {
-        key: '4',
-        si:4,
-        name: 'John Brown',
-        img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-        phone: 3254546454,
-        email:"ahad.aiman@gmail.com",
-        test:" Breath alcohol Testing ",
-        date:"02-24-2024",
-        amount:500,
-      },
-      {
-        key: '5',
-        si:5,
-        name: 'John Brown',
-        img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-        phone: 3254546454,
-        email:"ahad.aiman@gmail.com",
-        test:" Breath alcohol Testing ",
-        date:"02-24-2024",
-        amount:500,
-      },
-      {
-        key: '6',
-        si:6,
-        name: 'John Brown',
-        img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-        phone: 3254546454,
-        email:"ahad.aiman@gmail.com",
-        test:" Breath alcohol Testing ",
-        date:"02-24-2024",
-        amount:500,
-      },
-  ];
-
-const RecentAppointments = () => {
+  console.log(allAppointment);
+  const resentAppointment = allAppointment?.data?.attributes?.results.slice(0,5);
+  console.log(resentAppointment);
     return (
-        <Table  pagination={false} columns={columns} dataSource={data} />
+        <Table  pagination={false} columns={columns} dataSource={resentAppointment} />
     );
 }
 

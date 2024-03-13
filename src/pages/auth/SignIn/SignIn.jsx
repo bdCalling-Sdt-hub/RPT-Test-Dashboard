@@ -176,14 +176,14 @@ const SignIn = () => {
 
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <Form.Item name="remember" valuePropName="checked" noStyle>
+              {/* <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>
                   <span className="text-[#3BA6F6] font-medium">
                     {" "}
                     Remember Me
                   </span>
                 </Checkbox>
-              </Form.Item>
+              </Form.Item> */}
               {/* <input
                 className="bg-[#3BA6F6] size-[20px]"
                 type="checkbox"

@@ -43,7 +43,7 @@ const Setting = () => {
     //   setIsModalOpen(true);
     // }
     else if (value === "change-password") {
-      setModelTitle("Change password");
+      setModelTitle("Change Password");
       setIsModalOpen(true);
     } else {
       navigate(`/dashboard/settings/${value}`);
@@ -56,7 +56,7 @@ const Setting = () => {
     //   path: "notification",
     // },
     {
-      title: "Change password",
+      title: "Change Password",
       path: "change-password",
     },
     // {
@@ -66,7 +66,6 @@ const Setting = () => {
   ];
 
   const handleChangePassword = async (values) => {
-    console.log(values);
     const data = {
       oldPassword: values?.oldPassword,
       newPassword: values?.newPassword,
@@ -196,7 +195,7 @@ const Setting = () => {
           className="border border-[#0071e3] py-4 mb-2 px-4 text-sm rounded-lg bg-white flex items-center justify-between cursor-pointer hover:bg-[#e6f1fc] hover:textblack"
           onClick={() => handleNavigate(setting.path)}
         >
-          <h2>{setting.title}</h2>
+          <h2>{setting?.title}</h2>
           <h2>
             {setting.path === "notification" ? (
               <Switch
@@ -286,7 +285,7 @@ const Setting = () => {
               </form>
             )} */}
 
-        {modelTitle === "Change password" && (
+        {modelTitle === "Change Password" && (
           <div className="">
             <p className="text-[18px] mb-[24px] text-[#4E4E4E] ">
               Your password must be 8-10 character long.{" "}
@@ -314,7 +313,7 @@ const Setting = () => {
                 <Input.Password
                   size="large"
                   // onChange={handleChange}
-                  placeholder="Enter Your old Password"
+                  placeholder="Enter Your Old Password"
                   name="oldPassword"
                   prefix={
                     <IconLock
@@ -389,7 +388,7 @@ const Setting = () => {
               >
                 <Input.Password
                   size="large"
-                  placeholder="Re-enter password"
+                  placeholder="Re-enter Password"
                   name="re_enter_password"
                   prefix={
                     <IconLock
@@ -409,7 +408,7 @@ const Setting = () => {
                 />
               </Form.Item>
               <p className=" text-[#3BA6F6] font-medium">
-                <button onClick={() => setModelTitle("Forget password")}>
+                <button onClick={() => setModelTitle("Forget Password")}>
                   Forget Password
                 </button>
               </p>
@@ -419,14 +418,14 @@ const Setting = () => {
                   htmlType="submit"
                   className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
                 >
-                  Update password
+                  Update Password
                 </Button>
               </Form.Item>
             </Form>
           </div>
         )}
 
-        {modelTitle === "Forget password" && (
+        {modelTitle === "Forget Password" && (
           <div>
             <Form
               initialValues={{
@@ -441,13 +440,13 @@ const Setting = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your Email!",
+                      message: "Please Input Your Email!",
                     },
                   ]}
                 >
                   <Input
                     size="large"
-                    placeholder="Enter your email"
+                    placeholder="Enter Your Email"
                     name="email"
                     prefix={
                       <HiOutlineMailOpen
@@ -612,7 +611,7 @@ const Setting = () => {
                 htmlType="submit"
                 className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
               >
-                Update password
+                Update Password
               </Button>
             </Form.Item>
           </Form>

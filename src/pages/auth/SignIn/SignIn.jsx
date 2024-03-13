@@ -45,7 +45,7 @@ const SignIn = () => {
         Swal.fire({
           position: "top-center",
           icon: "success",
-          title: response.data.message,
+          title: response?.data?.message,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -85,7 +85,7 @@ const SignIn = () => {
     //   console.log(error)
     // });
   };
-  console.log(user, isSuccess);
+  // console.log(user, isSuccess);
   // const {data,isError,isLoading,isSuccess} = useGetUserQuery();
   // if(isLoading){
   //   return <Loading size={"large"}/>
@@ -197,14 +197,14 @@ const SignIn = () => {
                 to="/forgot_password"
                 className="text-[#3BA6F6] font-medium"
               >
-                Forget password?
+                Forgot password?
               </Link>
             </div>
           </div>
           <div>
-            <Link to="/register" className="text-[#3BA6F6] font-medium">
+            {/* <Link to="/register" className="text-[#3BA6F6] font-medium">
               Do not have account? Register Please
-            </Link>
+            </Link> */}
           </div>
 
           <Form.Item>
@@ -213,7 +213,7 @@ const SignIn = () => {
               htmlType="submit"
               className="block w-[350px] h-[56px] px-2 py-4 mt-2 text-white bg-[#3BA6F6] rounded-lg"
             >
-              Log in
+              Log In
             </Button>
             {/* <Link to="/dashboard"
               // type="primary"

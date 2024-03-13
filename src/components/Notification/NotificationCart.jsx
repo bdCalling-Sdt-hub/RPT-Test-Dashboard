@@ -79,7 +79,7 @@ const NotificationCart = ({item}) => {
               {/* </div> */}
               
                 <h1 className="text-[16px] font-normal">
-                    {`Ahad`} has booked an appointment for {message}.
+                  {message}.
                 </h1>
                 {/* <p className="text-[14px] text-[#979797]">{formatDate(createdAt)}</p> */}
             

@@ -44,7 +44,7 @@ const Dashboard = () => {
                   <BiSolidDashboard /> Dashboard
                 </NavLink>
               </li>
-              <NavLink
+              {/* <NavLink
                   to="/dashboard/users"
                   className={({ isActive, isPending }) =>
                   isPending ? "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg" : isActive ? "flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6]  m-[16px] rounded-lg" : "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px]  m-[16px] rounded-lg"
@@ -54,7 +54,7 @@ const Dashboard = () => {
                 <HiOutlineUsers />
                 Users
               
-              </NavLink>
+              </NavLink> */}
 
               <NavLink
                   to="/dashboard/appointments"

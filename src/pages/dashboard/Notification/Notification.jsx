@@ -3,7 +3,7 @@ import NotificationCart from "../../../components/Notification/NotificationCart"
 import { useGetNotificationQuery } from "../../../redux/features/getNotificationApi";
 import Loading from "../../../components/Loading/Loading";
 import { Pagination } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Notification = () => {
   const [page, setPage] = useState(1);
@@ -11,6 +11,7 @@ const Notification = () => {
   if (isLoading) {
     return <Loading />;
   }
+  
   const notification = data?.data?.attributes?.notifications?.results;
   console.log(notification);
   const onChange = (values) => {

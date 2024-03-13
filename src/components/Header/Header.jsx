@@ -10,7 +10,7 @@ import { io } from "socket.io-client";
 import Loading from "../Loading/Loading";
 const Header = () => {
   const date = new Date(); // Assuming the input date is in ISO 8601 format (YYYY-MM-DD)
-
+  
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString("en-US", options);
   const userData = JSON.parse(localStorage.getItem("yourInfo"));
@@ -54,7 +54,7 @@ const Header = () => {
           onClick={(e) => navigate("notification")}
           className="relative flex items-center "
         >
-          <Badge style={{ backgroundColor: "#3BA6F6" }} count={ socketNotifications? socketNotifications : notification?.totalUnreadNotifications
+          <Badge style={{ backgroundColor: "#3BA6F6" }} count={ socketNotifications ? socketNotifications : notification?.totalUnreadNotifications
 }>
             <IoIosNotificationsOutline
               style={{ cursor: "pointer" }}

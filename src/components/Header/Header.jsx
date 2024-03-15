@@ -31,7 +31,6 @@ const Header = () => {
   const notification = data?.data?.attributes;
   console.log(notification);
   const socketNotifications = socketNotification?.data?.totalUnreadNotifications;
-  console.log(socketNotifications);
   const navigate = useNavigate();
   if(isLoading){
     return <Loading/>

@@ -4,9 +4,9 @@ const getPaymentApi = baseApi.injectEndpoints({
   endpoints: (builder) => {
     return {
       getPayment: builder.query({
-        query: ({startDate, endDate}) => {
+        query: ({startDate, endDate,currentPage}) => {
         //   console.log(page);
-          return `/payment?&startDate=${startDate}&endDate=${endDate}`;
+          return `/payment?page=${currentPage}&limit=10&startDate=${startDate}&endDate=${endDate}`;
         },
       }),
     };

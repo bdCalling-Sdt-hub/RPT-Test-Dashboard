@@ -12,8 +12,9 @@ import { useState } from "react";
 const Earnings = () => {
   const [startDate,setStartDate]=useState('')
   const [endDate,setEndDate] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
-    const {data:paymentList,isLoading,isSuccess,isError} = useGetPaymentQuery({startDate,endDate})
+    const {data:paymentList,isLoading,isSuccess,isError} = useGetPaymentQuery({startDate,endDate,currentPage})
 
     const columns = [
         {
@@ -221,7 +222,7 @@ const Earnings = () => {
       // ];
    
    
-   console.log(paymentList?.payments?.results
+   console.log(paymentList?.payments
     );
    if(isLoading){
     return <Loading/>
@@ -246,7 +247,7 @@ const Earnings = () => {
                 <DatePicker placeholder="End Date" className="border-2 border-[#3BA6F6] font-bold "  onChange={onChangeEnd}  picker="date" />
             </div>
             <div className='ml-[24px] bg-white rounded-lg'>
-               <AllUserList data={paymentList?.payments?.results} columns={columns}/>
+               <AllUserList data={paymentList?.payments} columns={columns} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
             </div>
         </div>
     );

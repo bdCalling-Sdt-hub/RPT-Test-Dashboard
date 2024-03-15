@@ -6,14 +6,18 @@ import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useGetAppointmentQuery } from "../../../redux/features/getAppointmentApi";
 import Loading from "../../../components/Loading/Loading";
+import { useState } from "react";
 
 const Appointments = () => {
+ const [startDate,setStartDate] =  useState('')
+ const [endDate,setEndDate] =  useState('')
+ const [currentPage, setCurrentPage] = useState(1);
   const {
     data: allAppointment,
     isError,
     isLoading,
     isSuccess,
-  } = useGetAppointmentQuery();
+  } = useGetAppointmentQuery({startDate,currentPage,endDate});
 
   const columns = [
     {
@@ -260,8 +264,14 @@ price * record?.quantity)}</p>
   //       },
   // ];
 
-  const onChange = (date, dateString) => {
+  const onChangeStartDate = (date, dateString) => {
     console.log(date, dateString);
+    setStartDate(dateString)
+  };
+
+  const onChangeEndDate = (date, dateString) => {
+    console.log(date, dateString);
+    setEndDate(dateString)
   };
 
   if (isLoading) {
@@ -271,6 +281,7 @@ price * record?.quantity)}</p>
     console.log(allAppointment?.data?.attributes?.results);
   }
   console.log(allAppointment?.data?.attributes?.results);
+  console.log(allAppointment);
   return (
     <div>
       <div className="ml-[24px] mt-[44px]">
@@ -282,13 +293,13 @@ price * record?.quantity)}</p>
             <DatePicker
               placeholder="Start Date"
               className="border-2 border-[#3BA6F6] font-bold "
-              onChange={onChange}
+              onChange={onChangeStartDate}
               picker="date"
             />
             <DatePicker
               placeholder="End Date"
               className="border-2 border-[#3BA6F6] font-bold "
-              onChange={onChange}
+              onChange={onChangeEndDate}
               picker="date"
             />
           </div>
@@ -296,8 +307,10 @@ price * record?.quantity)}</p>
       </div>
       <div className="ml-[24px] mt-[24px] bg-white rounded-lg">
         <AllUserList
-          data={allAppointment?.data?.attributes?.results}
+          data={allAppointment?.data?.attributes}
           columns={columns}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
         />
       </div>
     </div>

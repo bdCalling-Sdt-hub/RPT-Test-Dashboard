@@ -4,24 +4,37 @@ import { useGetNotificationQuery } from "../../../redux/features/getNotification
 import Loading from "../../../components/Loading/Loading";
 import { Pagination } from "antd";
 import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 const Notification = () => {
   const [page, setPage] = useState(1);
+  const [socketNotification,setSocketNotification] = useState([]);
   const { data, isError, isLoading, isSuccess } = useGetNotificationQuery(page);
+
   if (isLoading) {
     return <Loading />;
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(()=>{
+    const socketNotification = io("ws://103.145.138.54:8282");
+    socketNotification.on("admin-notification",(data)=>{
+      setSocketNotification(data)
+    })
+    socketNotification.off("admin-notification", data)
+   
+  },[])
   
   const notification = data?.data?.attributes?.notifications?.results;
-  console.log(notification);
+  const socketNotifications  = socketNotification?.data?.notifications?.results
+  console.log("socketNotifications",socketNotifications?.notifications?.results);
+  console.log("notification",notification);
   const onChange = (values) => {
-    console.log(values);
     setPage(values);
   };
   console.log(data);
   const totalResults = data?.data?.attributes?.notifications?.totalResults;
-  console.log(totalResults);
-
+  // console.log(totalResults);
+  const allNotifications = socketNotifications || notification;
   return (
     <div>
       <div className="pl-[24px] ">
@@ -32,9 +45,9 @@ const Notification = () => {
             </h1>
           </div>
           <div className="flex flex-col">
-            {notification?.map((item, index) => (
-              <NotificationCart key={item?._id} item={item} />
-            ))}
+          {allNotifications?.map((item, index) => (
+            <NotificationCart key={index} item={item} />
+          ))}
           </div>
           <div className="flex justify-center my-10">
             <Pagination

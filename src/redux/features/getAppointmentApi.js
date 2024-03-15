@@ -3,7 +3,7 @@ import { baseApi } from "../api/baseApi";
 const getAppointmentApi = baseApi.injectEndpoints({
     endpoints:(builder)=>({
         getAppointment:builder.query({
-            query:()=>'/appointment?sortBy=createdAt:desc'
+            query:({startDate,currentPage,endDate})=>`/appointment?page=${currentPage}&limit=10&startDate=${startDate}&endDate=${endDate}&sortBy=createdAt:desc`
         })
     })
 })

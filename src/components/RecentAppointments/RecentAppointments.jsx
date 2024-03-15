@@ -2,7 +2,9 @@ import { Space, Table, Tag } from 'antd';
 import { BsInfoCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from 'react-router-dom';
-import { useGetAppointmentQuery } from '../../redux/features/getAppointmentApi';
+
+import Loading from '../Loading/Loading';
+import { useGetRecentAppointmentQuery } from '../../redux/features/getRecentAppointmentApi';
 
  
 
@@ -12,7 +14,7 @@ const RecentAppointments = () => {
     isError,
     isLoading,
     isSuccess,
-  } = useGetAppointmentQuery();
+  } = useGetRecentAppointmentQuery();
   const columns = [
     {
       title: "#SI",
@@ -123,6 +125,9 @@ price * record?.quantity)}</p>
       ),
     },
   ];
+  if(isLoading){
+    return <Loading/>
+  }
   console.log(allAppointment);
   const resentAppointment = allAppointment?.data?.attributes?.results.slice(0,5);
   console.log(resentAppointment);

@@ -10,21 +10,7 @@ const NotificationCart = ({item}) => {
         } = item;
         const [setId,result] = usePatchNotificationMutation()
 
-        // function formatDate(inputDate) {
-        //     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        
-        //     const date = new Date(inputDate);
-        //     const dayOfWeek = daysOfWeek[date.getUTCDay()];
-        //     const hours = date.getUTCHours();
-        //     const minutes = date.getUTCMinutes();
-        //     const ampm = hours >= 12 ? 'pm' : 'am';
-        //     const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-        //     const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-        
-        //     const formattedDate = `${dayOfWeek}, ${formattedHours}:${formattedMinutes}${ampm}`;
-        
-        //     return formattedDate;
-        // }
+       
         console.log(result);
         function calculateTimeDifference(dateString) {
             const now = new Date();
@@ -49,16 +35,7 @@ const NotificationCart = ({item}) => {
             }
         }
         const handleActiveNotification = async() =>{
-          console.log("aiman");
           try {
-            // const response = await baseURL.patch(`/notification/${_id}`,{},{
-            //   headers: {
-            //       "Content-Type": "application/json",
-            //       authorization: `Bearer ${localStorage.getItem('token')}`,
-                 
-            //   }});
-      
-            // console.log(response.data.code)
             setId(_id)
             
           } catch (error) {
@@ -66,8 +43,8 @@ const NotificationCart = ({item}) => {
           }
 
         }
-       return(
-        <Link to={`/dashboard/appointments/appointment-details/${linkId}`} onClick={handleActiveNotification}   className={`flex rounded-lg my-[16px]  ${
+       return (
+        <Link to={`/dashboard/appointments/appointment-details/${linkId}`} onClick={handleActiveNotification}   className={`flex rounded-lg my-[16px] ${
           viewStatus ? "bg-white" : "bg-[#e8e6fca8]"
       } p-[16px] gap-[16px] justify-between items-center`} >
         <div className={`flex gap-[16px] items-center p-[16px] `}>

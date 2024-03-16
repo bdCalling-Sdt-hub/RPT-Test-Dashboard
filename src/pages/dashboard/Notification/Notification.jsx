@@ -11,19 +11,30 @@ const Notification = () => {
   const [socketNotification,setSocketNotification] = useState([]);
   const { data, isError, isLoading, isSuccess } = useGetNotificationQuery(page);
 
+  
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  // useEffect(()=>{
+  //   const socketNotification = io("ws://103.145.138.54:8282");
+  //   socketNotification.on("admin-notification",(data)=>{
+  //     setSocketNotification(data)
+  //   })
+  //   socketNotification.off("admin-notification", data)
+   
+  // },[])
+  useEffect(() => {
+    const socket = io("ws://103.145.138.54:8282");
+    socket.on("admin-notification", (data) => {
+      setSocketNotification(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [socketNotification]);
+  
   if (isLoading) {
     return <Loading />;
   }
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(()=>{
-    const socketNotification = io("ws://103.145.138.54:8282");
-    socketNotification.on("admin-notification",(data)=>{
-      setSocketNotification(data)
-    })
-    socketNotification.off("admin-notification", data)
-   
-  },[])
-  
   const notification = data?.data?.attributes?.notifications?.results;
   const socketNotifications  = socketNotification?.data?.notifications?.results
   console.log("socketNotifications",socketNotifications?.notifications?.results);

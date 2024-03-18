@@ -56,7 +56,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.fastName
+                      ?.data?.fastName
                   }
                 </p>
               </div>
@@ -64,8 +64,8 @@ const AppointmentDetails = () => {
                 <p>Last Name:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.lastName
+                     appointmentDetails?.individualDOTInformation
+                     ?.data?.lastName
                   }
                 </p>
               </div>
@@ -74,7 +74,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.phone
+                      ?.data?.phone
                   }
                 </p>
               </div>
@@ -84,7 +84,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.resultEmail
+                      ?.data?.resultEmail
                   }
                 </p>
               </div>
@@ -93,7 +93,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.testReason
+                      ?.data?.testReason
                   }
                 </p>
               </div>
@@ -108,7 +108,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.fastName
+                      ?.data?.fastName
                   }
                 </p>
               </div>
@@ -116,8 +116,7 @@ const AppointmentDetails = () => {
                 <p>Last Name:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.lastName
+                    appointmentDetails?.individualDOTInformation?.data?.lastName
                   }
                 </p>
               </div>
@@ -126,7 +125,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.companyName
+                      ?.data?.companyName
                   }
                 </p>
               </div>
@@ -135,7 +134,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.phoneNumber
+                      ?.data?.phoneNumber
                   }
                 </p>
               </div>
@@ -145,7 +144,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.email
+                      ?.data?.email
                   }
                 </p>
               </div>
@@ -168,8 +167,7 @@ const AppointmentDetails = () => {
                 <p>First Name:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.fastName
+                    appointmentDetails?.individualDOTInformation?.data?.fastName
                   }
                 </p>
               </div>
@@ -177,8 +175,7 @@ const AppointmentDetails = () => {
                 <p>Last Name:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.lastName
+                    appointmentDetails?.individualDOTInformation?.data?.lastName
                   }
                 </p>
               </div>
@@ -186,8 +183,8 @@ const AppointmentDetails = () => {
                 <p>Phone Number:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.phoneNumber
+                    appointmentDetails?.individualDOTInformation?.data
+                     .phoneNumber
                   }
                 </p>
               </div>
@@ -195,7 +192,7 @@ const AppointmentDetails = () => {
                 <p>Date Of Birth:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation?.individualInformation?.dateOfBirth.split(
+                    appointmentDetails?.individualDOTInformation?.data?.dateOfBirth.split(
                       "T"
                     )[0]
                   }
@@ -206,7 +203,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.companyContactName
+                      ?.data?.companyContactName
                   }
                 </p>
               </div>
@@ -215,7 +212,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.companyAddress
+                      ?.data?.companyAddress
                   }
                 </p>
               </div>
@@ -224,7 +221,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.companyPhoneNumber
+                      ?.data?.companyPhoneNumber
                   }
                 </p>
               </div>
@@ -234,7 +231,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.dotAgency
+                      ?.data?.dotAgency
                   }
                 </p>
               </div>
@@ -244,7 +241,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.resultEmail
+                      ?.data?.resultEmail
                   }
                 </p>
               </div>
@@ -253,7 +250,7 @@ const AppointmentDetails = () => {
                 <p>
                   {
                     appointmentDetails?.individualDOTInformation
-                      ?.individualInformation?.testReason
+                      ?.data?.testReason
                   }
                 </p>
               </div>
@@ -267,7 +264,7 @@ const AppointmentDetails = () => {
                 <p>Company Name:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.companyName
                   }
                 </p>
@@ -276,7 +273,7 @@ const AppointmentDetails = () => {
                 <p>Company Email:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.companyEmail
                   }
                 </p>
@@ -285,19 +282,19 @@ const AppointmentDetails = () => {
                 <p>Company Address:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.companyAddress
                   }
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.companyCity
                   }
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.companyState
                   }
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.CompanyZip
                   }
                 </p>
@@ -306,7 +303,7 @@ const AppointmentDetails = () => {
                 <p>Company Agency:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.companyAgency
                   }
                 </p>
@@ -315,7 +312,7 @@ const AppointmentDetails = () => {
                 <p>Number Of Employee:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.
                       numberOfEmployees
                   }
@@ -325,11 +322,11 @@ const AppointmentDetails = () => {
                 <p>Contact Name:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.contactFirstName
                   }{" "}
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.contactLastName
                   }
                 </p>
@@ -338,7 +335,7 @@ const AppointmentDetails = () => {
                 <p>Primary Phone Number:</p>
                 <p>
                 {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.
                       primaryPhone
                   }
@@ -348,7 +345,7 @@ const AppointmentDetails = () => {
                 <p>Secondary Phone Number:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.secondaryPhone
                   }
                 </p>
@@ -358,7 +355,7 @@ const AppointmentDetails = () => {
                 <p>Test Completed Each Year:</p>
                 <p>
                   {
-                    appointmentDetails?.individualDOTInformation
+                    appointmentDetails?.individualDOTInformation?.data
                       ?.companyInformation?.
                       TestsCompletedEachYear
                       
@@ -372,41 +369,43 @@ const AppointmentDetails = () => {
           ) : (
             ""
           )}
-
-          <div className="mt-[28px]">
-            <h1 className="text-[24px] font-medium mb-[20px]">
-              Medical Details:
-            </h1>
-            <div className="flex justify-between mb-[16px]">
-              <p>Name:</p>
-              <p>{appointmentDetails?.selectedLocation?.AddressName} </p>
-            </div>
-            <div className="flex justify-between mb-[16px]">
-              <p>Address:</p>
-              <p>
-                {" "}
-                {appointmentDetails?.selectedLocation?.AddressName}
-                {appointmentDetails?.selectedLocation?.AddressAddress1} -{" "}
-                {appointmentDetails?.selectedLocation?.AddressCity},{" "}
-                {appointmentDetails?.selectedLocation?.AddressState},{" "}
-                {appointmentDetails?.selectedLocation?.AddressZip}
-              </p>
-            </div>
-            <div className="flex justify-between mb-[16px]">
-              <p>Phone Number:</p>
-              <p>{appointmentDetails?.selectedLocation?.PrimaryPhoneNumber} </p>
-            </div>
-            <div className="flex justify-between mb-[16px]">
-              <p>Days And Hours Of Operation:</p>
-              <p>
-                {appointmentDetails?.selectedLocation?.DaysAndHoursOfOperation}{" "}
-              </p>
-            </div>
-            <div className="flex justify-between mb-[16px]">
-              <p>Hours Of Operation:</p>
-              <p>{appointmentDetails?.selectedLocation?.HoursOfOperation} </p>
-            </div>
-          </div>
+{
+  appointmentDetails?.type == "individual-non-dot-test" || appointmentDetails?.type == "choice-membership-dot"  ? "":<div className="mt-[28px]">
+  <h1 className="text-[24px] font-medium mb-[20px]">
+    Medical Details:
+  </h1>
+  <div className="flex justify-between mb-[16px]">
+    <p>Name:</p>
+    <p>{appointmentDetails?.selectedLocation?.AddressName} </p>
+  </div>
+  <div className="flex justify-between mb-[16px]">
+    <p>Address:</p>
+    <p>
+      {" "}
+      {appointmentDetails?.selectedLocation?.AddressName}
+      {appointmentDetails?.selectedLocation?.AddressAddress1} -{" "}
+      {appointmentDetails?.selectedLocation?.AddressCity},{" "}
+      {appointmentDetails?.selectedLocation?.AddressState},{" "}
+      {appointmentDetails?.selectedLocation?.AddressZip}
+    </p>
+  </div>
+  <div className="flex justify-between mb-[16px]">
+    <p>Phone Number:</p>
+    <p>{appointmentDetails?.selectedLocation?.PrimaryPhoneNumber} </p>
+  </div>
+  <div className="flex justify-between mb-[16px]">
+    <p>Days And Hours Of Operation:</p>
+    <p>
+      {appointmentDetails?.selectedLocation?.DaysAndHoursOfOperation}{" "}
+    </p>
+  </div>
+  <div className="flex justify-between mb-[16px]">
+    <p>Hours Of Operation:</p>
+    <p>{appointmentDetails?.selectedLocation?.HoursOfOperation} </p>
+  </div>
+</div>
+}
+          
 
           <div>
             <h1 className="text-[28px] font-medium mb-[20px]">
@@ -417,7 +416,7 @@ const AppointmentDetails = () => {
               <p>
                 {
                   appointmentDetails?.individualDOTInformation
-                    ?.paymentInformation?.fullName
+                    ?.paymentInformationData?.name
                 }
               </p>
             </div>
@@ -426,11 +425,11 @@ const AppointmentDetails = () => {
               <p>
                 {
                   appointmentDetails?.individualDOTInformation
-                    ?.paymentInformation?.email
+                  ?.paymentInformationData?.email
                 }
               </p>
             </div>
-            <div className="flex justify-between mb-[16px]">
+            {/* <div className="flex justify-between mb-[16px]">
               <p>Phone Number:</p>
               <p>
                 {
@@ -438,13 +437,13 @@ const AppointmentDetails = () => {
                     ?.paymentInformation?.phoneNumber
                 }
               </p>
-            </div>
+            </div> */}
             <div className="flex justify-between mb-[16px]">
-              <p>Address:</p>
+              <p>Billing Address:</p>
               <p>
                 {
-                  appointmentDetails?.individualDOTInformation
-                    ?.paymentInformation?.address
+                   appointmentDetails?.individualDOTInformation
+                   ?.paymentInformationData?.billingAddress
                 }
               </p>
             </div>

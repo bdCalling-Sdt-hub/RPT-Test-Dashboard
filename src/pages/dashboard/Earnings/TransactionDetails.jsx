@@ -69,7 +69,7 @@ const TransactionDetails = () => {
             </div> */}
           <div className="flex justify-between mb-[16px]">
             <p>Received Amount:</p>
-            <p>{singlePayment?.payment?.price.toFixed(2)}</p>
+            <p>{singlePayment?.payment?.price.toFixed(2)} $</p>
           </div>
           <div className="flex justify-between mb-[16px]">
             <p>Date:</p>
@@ -79,13 +79,13 @@ const TransactionDetails = () => {
             <h1 className="text-[18px] font-medium mb-[20px]">User Details:</h1>
             <div className="flex justify-between mb-[16px]">
               <p>Full Name:</p>
-              <p>{singlePayment?.payment?.paymentInformation?.fullName
+              <p>{singlePayment?.payment?.paymentInformation?.name
 }</p>
             </div>
-            <div className="flex justify-between mb-[16px]">
+            {/* <div className="flex justify-between mb-[16px]">
               <p>Phone Number:</p>
               <p>{singlePayment?.payment?.paymentInformation?.phoneNumber}</p>
-            </div>
+            </div> */}
             <div className="flex justify-between mb-[16px]">
               <p>Email:</p>
               <p>{singlePayment?.payment?.paymentInformation?.email}</p>

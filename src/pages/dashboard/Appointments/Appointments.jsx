@@ -33,23 +33,12 @@ const Appointments = () => {
       render: (_, record) => (
         <div className="items-center">
           <p className="font-medium">
-            {record?.individualDOTInformation?.paymentInformation?.fullName}
+            {record?.individualDOTInformation?.paymentInformationData?.name}
           </p>
         </div>
       ),
     },
-    {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
-      render: (_, record) => (
-        <div>
-          <p className="font-medium">
-            {record?.individualDOTInformation?.paymentInformation?.phoneNumber}
-          </p>
-        </div>
-      ),
-    },
+    
     {
       title: "Email",
       dataIndex: "email",
@@ -57,7 +46,7 @@ const Appointments = () => {
       render: (_, record) => (
         <div>
           <p className="font-medium">
-            {record?.individualDOTInformation?.paymentInformation?.email}
+            {record?.individualDOTInformation?.paymentInformationData?.email}
           </p>
         </div>
       ),
@@ -68,7 +57,11 @@ const Appointments = () => {
       key: "test",
       render: (_, record) => (
         <div>
-          <p className="font-medium">{record?.shoppingCart?.name}</p>
+          <p className="font-medium">
+
+            {record?.shoppingCart?.name || record?.shoppingCart?.title }
+            
+          </p>
         </div>
       ),
     },

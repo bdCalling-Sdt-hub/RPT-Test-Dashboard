@@ -31,20 +31,11 @@ const Earnings = () => {
           key: 'name',
           render: (_, record) => (
             <div className='flex gap-2 items-center'>
-              <p className='font-medium'>{record?.paymentInformation?.fullName}</p>
+              <p className='font-medium'>{record?.paymentInformation?.name}</p>
             </div>
           ),
         },
-        {
-          title: 'Phone',
-          dataIndex: 'phone',
-          key: 'phone',
-          render: (_, record) => (
-            <div className='flex gap-2 items-center'>
-              <p className='font-medium'>{record?.paymentInformation?.phoneNumber}</p>
-            </div>
-          ),
-        },
+      
         {
           title: 'Email',
           dataIndex: 'email',

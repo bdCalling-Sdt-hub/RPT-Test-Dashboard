@@ -29,8 +29,8 @@ const Membership = () => {
   return (
     <div>
       <div className="flex justify-end">
-        {
-          memberships.length<2 && <div
+        
+          <div
           onClick={(e) => navigate("/dashboard/membership/addmembership")}
           className="flex gap-2 items-center py-[15px]
                  px-[40px]
@@ -43,7 +43,7 @@ const Membership = () => {
           <FaPlus size={17} />
           <p>Add Membership</p>
         </div>
-        }
+        
         
       </div>
       <div className="grid lg:grid-cols-2 gap-5 mt-5 mr-5">

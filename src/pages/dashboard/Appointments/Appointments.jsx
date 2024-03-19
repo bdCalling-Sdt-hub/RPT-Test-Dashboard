@@ -46,7 +46,7 @@ const Appointments = () => {
       render: (_, record) => (
         <div>
           <p className="font-medium">
-            {record?.individualDOTInformation?.paymentInformationData?.email}
+          {record?.individualDOTInformation?.paymentInformationData?.email}
           </p>
         </div>
       ),

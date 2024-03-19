@@ -29,7 +29,7 @@ const Dashboard = () => {
     <div className="flex bg-[#EBF6FE] p-[32px] min-h-screen">
       <div className="w-[326px] flex flex-col justify-between bg-[#FFFFFF] min-h-screen rounded-lg border-2">
         <div className="">
-          <Link to='/' className="p-[32px]">
+          <Link to='/dashboard' className="p-[32px]">
             <img src={logo} alt="" />
           </Link>
           <div className="">

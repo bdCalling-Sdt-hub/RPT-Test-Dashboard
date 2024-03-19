@@ -29,9 +29,9 @@ const Dashboard = () => {
     <div className="flex bg-[#EBF6FE] p-[32px] min-h-screen">
       <div className="w-[326px] flex flex-col justify-between bg-[#FFFFFF] min-h-screen rounded-lg border-2">
         <div className="">
-          <div className="p-[32px]">
+          <Link to='/' className="p-[32px]">
             <img src={logo} alt="" />
-          </div>
+          </Link>
           <div className="">
             <ul>
               <li>

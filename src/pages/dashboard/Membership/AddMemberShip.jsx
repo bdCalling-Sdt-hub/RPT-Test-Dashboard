@@ -86,7 +86,7 @@ const AddMemberShip = () => {
           wrapperCol={{ span: 40 }}
           layout="vertical"
           initialValues={{
-            remember: true,
+            // remember: true,
           }}
           onFinish={handleAddMembership}
           //   onFinishFailed={handleCompanyInformationFailed}

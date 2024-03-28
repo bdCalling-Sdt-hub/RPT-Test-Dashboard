@@ -17,7 +17,7 @@ const Header = () => {
   const {data,isError,isLoading,isSuccess} = useGetNotificationQuery(1);
   const [socketNotification,setSocketNotification] = useState([]);
   useEffect(()=>{
-    const socketNotification = io("ws://103.145.138.54:8282");
+    const socketNotification = io("http://api.rptlabs.org");
     socketNotification.on("connect",()=>{
       socketNotification.on("admin-notification",(data)=>{
         console.log(data);

@@ -120,7 +120,7 @@ const AppointmentDetails = () => {
                   }
                 </p>
               </div>
-              <div className="flex justify-between mb-[16px]">
+              {/* <div className="flex justify-between mb-[16px]">
                 <p>Company Name:</p>
                 <p>
                   {
@@ -128,7 +128,7 @@ const AppointmentDetails = () => {
                       ?.data?.companyName
                   }
                 </p>
-              </div>
+              </div> */}
               <div className="flex justify-between mb-[16px]">
                 <p>Phone Number:</p>
                 <p>
@@ -366,43 +366,103 @@ const AppointmentDetails = () => {
              
              
             </div>
-          ) : (
+          ) : appointmentDetails?.type == "policy" ? (
+            <div>
+              <h1 className="text-[28px] font-medium mb-[20px]">
+                {appointmentDetails?.shoppingCart?.name}
+              </h1>
+              <div className="flex justify-between mb-[16px]">
+                <p>Name:</p>
+                <p>
+                  {`${
+                    appointmentDetails?.individualDOTInformation?.data
+                      ?.fastName
+                  } ${ appointmentDetails?.individualDOTInformation?.data
+                    ?.lastName}`}
+                </p>
+              </div>
+              <div className="flex justify-between mb-[16px]">
+                <p>Email:</p>
+                <p>
+                  {
+                    appointmentDetails?.individualDOTInformation?.data
+                      ?.orderEmail
+                  }
+                </p>
+              </div>
+              <div className="flex justify-between mb-[16px]">
+                <p>Phone:</p>
+                <p>
+                  {
+                    appointmentDetails?.individualDOTInformation?.data
+                      ?.phone
+                  }
+                </p>
+              </div>
+              <div className="flex justify-between mb-[16px]">
+                <p>Result Email:</p>
+                <p>
+                  {
+                    appointmentDetails?.individualDOTInformation?.data
+                      ?.resultEmail
+                  }
+                </p>
+              </div>
+              <div className="flex justify-between mb-[16px]">
+                <p>SSN:</p>
+                <p>
+                  {
+                    appointmentDetails?.individualDOTInformation?.data
+                      ?.ssn
+                  }
+                </p>
+              </div>
+              <div className="flex justify-between mb-[16px]">
+                <p>Test Reason:</p>
+                <p>
+                  {
+                    appointmentDetails?.individualDOTInformation?.data
+                      ?.testReason
+                  }{" "}
+                </p>
+              </div>
+            
+
+             
+             
+            </div>
+          ): (
             ""
           )}
 {
-  appointmentDetails?.type == "individual-non-dot-test" || appointmentDetails?.type == "choice-membership-dot"  ? "":<div className="mt-[28px]">
+  appointmentDetails?.type == "individual-non-dot-test" || appointmentDetails?.type == "choice-membership-dot" || appointmentDetails?.type == "policy" ? "":<div className="mt-[28px]">
   <h1 className="text-[24px] font-medium mb-[20px]">
     Medical Details:
   </h1>
   <div className="flex justify-between mb-[16px]">
     <p>Name:</p>
-    <p>{appointmentDetails?.selectedLocation?.AddressName} </p>
+    <p>{appointmentDetails?.selectedLocation?.facilityName} </p>
   </div>
   <div className="flex justify-between mb-[16px]">
     <p>Address:</p>
     <p>
       {" "}
-      {appointmentDetails?.selectedLocation?.AddressName}
-      {appointmentDetails?.selectedLocation?.AddressAddress1} -{" "}
-      {appointmentDetails?.selectedLocation?.AddressCity},{" "}
-      {appointmentDetails?.selectedLocation?.AddressState},{" "}
-      {appointmentDetails?.selectedLocation?.AddressZip}
+      {appointmentDetails?.selectedLocation?.address}
+      {appointmentDetails?.selectedLocation?.ST} -{" "}
+      {appointmentDetails?.selectedLocation?.city},{" "}
+      {appointmentDetails?.selectedLocation?.COUNTY},{" "}
+      {appointmentDetails?.selectedLocation?.ZIP}
     </p>
   </div>
   <div className="flex justify-between mb-[16px]">
     <p>Phone Number:</p>
-    <p>{appointmentDetails?.selectedLocation?.PrimaryPhoneNumber} </p>
+    <p>{appointmentDetails?.selectedLocation?.PHONE} </p>
   </div>
-  <div className="flex justify-between mb-[16px]">
-    <p>Days And Hours Of Operation:</p>
-    <p>
-      {appointmentDetails?.selectedLocation?.DaysAndHoursOfOperation}{" "}
-    </p>
-  </div>
-  <div className="flex justify-between mb-[16px]">
+  
+  {/* <div className="flex justify-between mb-[16px]">
     <p>Hours Of Operation:</p>
     <p>{appointmentDetails?.selectedLocation?.HoursOfOperation} </p>
-  </div>
+  </div> */}
 </div>
 }
           

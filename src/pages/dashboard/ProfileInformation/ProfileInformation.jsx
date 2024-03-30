@@ -121,7 +121,7 @@ const ProfileInformation = () => {
                 readOnly
               />
             </div>
-            <div className="flex-1">
+            {/* <div className="flex-1">
               <label
                 htmlFor=""
                 className="text-[#222222] text-[18px] font-medium mb-[12px]"
@@ -142,7 +142,7 @@ const ProfileInformation = () => {
                 prefix={<CiCalendarDate size={20} />}
                
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

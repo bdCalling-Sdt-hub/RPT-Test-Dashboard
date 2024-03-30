@@ -312,7 +312,7 @@ const EditProfile = () => {
                     onChange={setPhoneNumber}
                   />
                 </div>
-                <div className="flex-1">
+                {/* <div className="flex-1">
                   <Form.Item
                     label={
                       <span className="text-[#222222] text-[18px] font-medium">
@@ -348,7 +348,7 @@ const EditProfile = () => {
                       // }
                     />
                   </Form.Item>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

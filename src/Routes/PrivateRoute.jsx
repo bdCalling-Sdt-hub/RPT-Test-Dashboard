@@ -18,7 +18,7 @@ const PrivateRoute = ({children}) => {
     if(user?.user?.isEmailVerified && user?.user?.role=="admin" || user?.user?.role=="employee"){
         return children;
     }
-    return <Navigate to='/' state={{from:location}} />
+    return <Navigate to='/auth' state={{from:location}} />
 }
 
 export default PrivateRoute;

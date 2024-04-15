@@ -29,16 +29,16 @@ const Dashboard = () => {
     <div className="flex bg-[#EBF6FE] p-[32px] min-h-screen">
       <div className="w-[326px] flex flex-col justify-between bg-[#FFFFFF] min-h-screen rounded-lg border-2">
         <div className="">
-          <Link to='/dashboard' className="p-[32px]">
+          <Link to='/dashboard/dashboards' className="p-[32px]">
             <img src={logo} alt=""  className="p-[32px]"/>
           </Link>
           <div className="">
             <ul>
               <li>
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/dashboards"
                   className={({ isActive, isPending }) =>
-                  isPending ? "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg " : isActive ? "flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6]  m-[16px] rounded-lg border-2 border-gray-600" : "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg"
+                  isPending ? "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg " : isActive ? "flex text-white gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#3BA6F6]  m-[16px] rounded-lg" : "flex text-[#3BA6F6] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[white] m-[16px] rounded-lg"
                 }
                 >
                   <BiSolidDashboard /> Dashboard

@@ -45,10 +45,7 @@ const EditProfile = () => {
     setImageUrl(`${baseUrl}${user?.image?.url}`)
     setPhoneNumber(user?.phoneNumber)
   },[data])
-  //   useEffect(() => {
-  //     setPhoneNumber(currentUser?.phoneNumber);
-  //     setImageUrl(`${baseUrl}${currentUser?.image?.url}`);
-  //   }, [data]);
+
   if (isLoading) {
     return <Loading />;
   }

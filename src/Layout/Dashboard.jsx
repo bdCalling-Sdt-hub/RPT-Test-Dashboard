@@ -166,7 +166,7 @@ const Dashboard = () => {
                 }
                 >
               
-              <CiSettings /> Setting
+              <CiSettings /> Settings
               </NavLink>
               
             </ul>

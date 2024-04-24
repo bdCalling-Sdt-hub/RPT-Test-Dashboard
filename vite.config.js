@@ -8,7 +8,7 @@ export default defineConfig({
 // export default defineConfig({
 //   plugins: [react()],
 //   server: {
-//     host: "45.55.201.156",
+//     host: "192.168.10.46",
 //     port: "8000",
 //   },
 // });

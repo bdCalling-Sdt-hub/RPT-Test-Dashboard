@@ -21,7 +21,7 @@ function Status() {
          <FaHandHoldingUsd size={64} className=" text-[#3BA6F6] p-[16px] bg-[#EBF6FE] rounded-[24px]" />
         <div>
           <h4 className="text-[18px]">Total Earnings</h4>
-          <h1 className="text-[#3BA6F6] text-[32px] font-semibold">$ {formatToK(data?.total)}</h1>
+          <h1 className="text-[#3BA6F6] text-[32px] font-semibold">$ {formatToK(data?.total) === 'NaNk' ? 0 : formatToK(data?.total) }</h1>
         </div>
       </div>
       <div className="flex-1 rounded-lg  border-1 shadow-lg items-center py-[16px] px-[50px] bg-white border-primary border-[1px] p-[24px] flex gap-[33px]">
@@ -29,7 +29,7 @@ function Status() {
         <div>
           <h4 className="text-[18px]">Total Appointments</h4>
           <h1 className="text-[#3BA6F6] text-[32px] font-semibold">{data?.
-totalAppointment}</h1>
+totalAppointment || 0}</h1>
         </div>
       </div>
       {/* <div className="rounded-lg w-[33%] border-1 shadow-lg items-center py-[16px] px-[50px] bg-white border-primary border-[1px] p-[24px] flex gap-5">

@@ -46,6 +46,7 @@ const EditBlog = () => {
   }, [data]);
   console.log(content);
   console.log(singleBlog?.content);
+  
   if (isLoading) {
     return <Loading />;
   }

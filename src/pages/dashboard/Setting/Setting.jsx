@@ -25,7 +25,7 @@ const Setting = () => {
     console.log(`switch to ${checked}`);
   };
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user-update"));
+    const user = JSON.parse(localStorage.getItem("user-update")) || {};
     console.log(user);
     setEmail(user.email);
   }, []);
@@ -160,17 +160,17 @@ const Setting = () => {
     // e.preventDefault();
     console.log(values);
 
-    const data = { email: email, password: values?.password };
+    const data = { email: email || "", password: values?.password };
     console.log(data);
     try {
       const response = await baseURL.post(`/auth/reset-password`, data);
 
-      console.log(response.data);
+      console.log(response?.data);
       if (response.data.code == 200) {
         Swal.fire({
           position: "top-center",
           icon: "success",
-          title: response.data.message,
+          title: response?.data?.message,
           showConfirmButton: false,
           timer: 1500,
         });

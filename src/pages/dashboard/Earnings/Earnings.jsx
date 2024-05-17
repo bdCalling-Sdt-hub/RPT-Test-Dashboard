@@ -14,7 +14,8 @@ const Earnings = () => {
   const [endDate,setEndDate] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-    const {data:paymentList,isLoading,isSuccess,isError} = useGetPaymentQuery({startDate,endDate,currentPage})
+    const {data:paymentList,isLoading,isSuccess,isError} = useGetPaymentQuery({startDate,endDate,currentPage});
+    console.log("aimannnnnnnnnn",paymentList);
 
     const columns = [
         {
@@ -77,140 +78,7 @@ const Earnings = () => {
           ),
         },
       ];
-      // const data = [
-      //   {
-      //     key: '1',
-      //     tr:123456,
-      //     name: 'John Brown',
-      //     img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //     phone: 3254546454,
-      //     date:"02-24-2024",
-      //     amount:500,
-      //     email:"ahad.aiman@gmail.com",
-      //     test:"Alcohol",
-      //   },
-      //   {
-      //       key: '2',
-      //       tr:123456,
-      //       name: 'John Brown',
-      //       img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //       phone: 3254546454,
-      //       date:"02-24-2024",
-      //       email:"ahad.aiman@gmail.com",
-      //       test:"Alcohol",
-      //       amount:500
-      //     },
-      //     {
-      //       key: '3',
-      //       tr:123456,
-      //       name: 'John Brown',
-      //       img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //       phone: 3254546454,
-      //       date:"02-24-2024",
-      //       email:"ahad.aiman@gmail.com",
-      //       test:"Alcohol",
-      //       amount:500
-      //     },
-      //     {
-      //       key: '4',
-      //       tr:123456,
-      //       name: 'John Brown',
-      //       img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //       phone: 3254546454,
-      //       date:"02-24-2024",
-      //       email:"ahad.aiman@gmail.com",
-      //       test:"Alcohol",
-      //       amount:500
-      //     },
-      //     {
-      //       key: '5',
-      //       tr:123456,
-      //       name: 'John Brown',
-      //       img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //       phone: 3254546454,
-      //       date:"02-24-2024",
-      //       email:"ahad.aiman@gmail.com",
-      //       test:"Alcohol",
-      //       amount:500
-      //     },
-      //     {
-      //       key: '6',
-      //       tr:123456,
-      //       name: 'John Brown',
-      //       img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //       phone: 3254546454,
-      //       date:"02-24-2024",
-      //       email:"ahad.aiman@gmail.com",
-      //       test:"Alcohol",
-      //       amount:500
-      //     },
-      //     {
-      //       key: '7',
-      //       tr:123456,
-      //       name: 'John Brown',
-      //       img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //       phone: 3254546454,
-      //       date:"02-24-2024",
-      //       email:"ahad.aiman@gmail.com",
-      //       test:"Alcohol",
-      //       amount:500
-      //     },
-      //     {
-      //         key: '8',
-      //         tr:123456,
-      //         name: 'John Brown',
-      //         img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //         phone: 3254546454,
-      //         date:"02-24-2024",
-      //         email:"ahad.aiman@gmail.com",
-      //         test:"Alcohol",
-      //         amount:500
-      //       },
-      //       {
-      //         key: '9',
-      //         tr:123456,
-      //         name: 'John Brown',
-      //         img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //         phone: 3254546454,
-      //         date:"02-24-2024",
-      //         email:"ahad.aiman@gmail.com",
-      //         test:"Alcohol",
-      //         amount:500
-      //       },
-      //       {
-      //         key: '10',
-      //         tr:123456,
-      //         name: 'John Brown',
-      //         img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //         phone: 3254546454,
-      //         date:"02-24-2024",
-      //         email:"ahad.aiman@gmail.com",
-      //         test:"Alcohol",
-      //         amount:500
-      //       },
-      //       {
-      //         key: '11',
-      //         tr:123456,
-      //         name: 'John Brown',
-      //         img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //         phone: 3254546454,
-      //         date:"02-24-2024",
-      //         email:"ahad.aiman@gmail.com",
-      //         test:"Alcohol",
-      //         amount:500
-      //       },
-      //       {
-      //         key: '12',
-      //         tr:123456,
-      //         name: 'John Brown',
-      //         img:"https://i.ibb.co/T48mrYj/197381012-2915728158682381-6698162649397856913-n.jpg",
-      //         phone: 3254546454,
-      //         date:"02-24-2024",
-      //         email:"ahad.aiman@gmail.com",
-      //         test:"Alcohol",
-      //         amount:500
-      //       }
-      // ];
+    
    
    
    console.log(paymentList?.payments
@@ -238,7 +106,7 @@ const Earnings = () => {
                 <DatePicker placeholder="End Date" className="border-2 border-[#3BA6F6] font-bold "  onChange={onChangeEnd}  picker="date" />
             </div>
             <div className='ml-[24px] bg-white rounded-lg'>
-               <AllUserList data={paymentList?.payments} columns={columns} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
+               <AllUserList data={paymentList?.payments || []} columns={columns} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
             </div>
         </div>
     );
